@@ -128,12 +128,12 @@ def process_steps(step,ingredients):
                 dic["methods"].append(items)
 
         for items in data.Method_Secondary:
-            if items in sentence:
+            if items in sentence and items not in dic["methods"]:
                 dic["methods"].append(items)
 
         dic["ingredients"]=[]
         for ele in ingredients:
-            if ele in sentence:
+            if ele in sentence and ele not in dic["ingredients"]:
                 dic["ingredients"].append(ele)
         if len(dic["ingredients"])>0 or len(dic["methods"])>0 or len(dic["tools"])>0 or len(dic["time"])>0:
             steps.append(dic)
