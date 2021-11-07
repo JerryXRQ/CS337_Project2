@@ -171,9 +171,12 @@ descriptors= {
             "refrigerated",
             "skinless",
             "tender",
-            "warm"
+            "warm",
+            "halves"
       ]),
       "other": set([
+            "finger-sized",
+            "all-purpose",
             "a la carte",
             "a la king",
             "a la mode",
@@ -441,7 +444,9 @@ Method_Secondary=set([
       "toast",
       "toss",
       "turn",
-      "whisk"
+      "whisk",
+      "coat",
+      "place"
     ])
 Tools=set([
     "apple corer",
@@ -654,7 +659,8 @@ Tools=set([
     "weighing scales",
     "whisk",
     "wooden spoon",
-    "zester"
+    "zester",
+    "nonstick spray"
 ])
 Time_Units=set([
       "second",

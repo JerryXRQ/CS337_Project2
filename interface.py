@@ -29,6 +29,9 @@ def main():
             det=False
         elif action=="vegetarian":
             modified=parse_tools.recipe(dish)
+            modified.to_Vegetarian()
+            modified.print_ingredients()
+            modified.print_steps()
 
     return
 

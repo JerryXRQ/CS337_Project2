@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 from collections import defaultdict
 import data
+import random
 
 class recipe():
     ingredients = {}
@@ -43,6 +44,7 @@ class recipe():
         temp = temp.replace("- ", "")
         dic={}
         #ele.replace()
+        prep_result=set(["into","to"])
         words=temp.split()
         quantity=0
         unit=""
@@ -66,11 +68,14 @@ class recipe():
         for w in range(len(update)):
             if update[w] in data.Liquid_Measurements or update[w] in data.Solid_Measurements:
                 if w>0:
-                    quantity=float(update[w-1])
-                unit=update[w]
-                name=" ".join(update[w+1:])
-                found=True
-                break
+                    try:
+                        quantity=float(update[w-1])
+                        unit=update[w]
+                        name=" ".join(update[w+1:])
+                        found=True
+                        break
+                    except:
+                        found=False
         if not found:
             if words[0][0] in set([".","0","1","2","3","4","5","6","7","8","9"]):
                 quantity=float(words[0])
@@ -80,17 +85,22 @@ class recipe():
                 quantity=0
                 name=" ".join(update)
                 unit="Based on Preference"
-        for elements in name.split():
-            if elements in data.prep:
-                name=name.replace(elements,"")
+        print(name.split())
+        split=name.split()
+        for index in range(len(split)):
+            if split[index] in data.prep:
+                name=name.replace(split[index],"")
                 name=name.replace("  "," ")
-                prep.append(elements)
+                if index+1<len(split) and split[index+1]in prep_result:
+                    name=name.replace(split[index+1],"")
+                    name=name.replace("  "," ")
+                prep.append(split[index])
 
-            for types in data.descriptors:
-                if elements in data.descriptors[types]:
-                    name = name.replace(elements, "")
+            for types in data.descriptors.keys():
+                if split[index] in data.descriptors[types]:
+                    name = name.replace(split[index], "")
                     name = name.replace("  ", " ")
-                    descriptions.append(elements)
+                    descriptions.append(split[index])
         if name[0]==" ":
             name=name[1:]
         if name[len(name)-1]==" ":
@@ -162,6 +172,53 @@ class recipe():
             if len(dic["ingredients"])>0 or len(dic["methods"])>0 or len(dic["tools"])>0 or len(dic["time"])>0:
                 steps.append(dic)
         return steps
+
+    def to_Vegetarian(self):
+        updated_ingredients={}
+        replaced=[]
+        replacement=[]
+        for ele in self.ingredients.keys():
+            meat=False
+            for words in ele.split():
+                if words in data.Non_Vegan["meat"]:
+                    meat=True
+                    break
+            if meat:
+                replaced.append(ele)
+                find=random.sample(data.Vegan_Protein,1)
+                while find[0] in replacement and len(replacement)<len(data.Vegan_Protein):
+                    find=random.sample(data.Vegan_Protein,1)
+                replacement.append(find[0])
+        print(replaced,replacement)
+        for ele in range(len(replaced)):
+            dic={}
+            dic["name"]=replacement[ele]
+            dic["quantity"]=self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"]=self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = []
+            for w in self.ingredients[replaced[ele]]["descriptions"]:
+                if w not in data.descriptors["meat"]:
+                    dic["descriptions"].append(w)
+
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]]=dic
+
+        for ele in self.steps:
+            new_lis=[]
+            for ing in ele["ingredients"]:
+                if ing in replaced:
+                    new_lis.append(replacement[replaced.index(ing)])
+                else:
+                    new_lis.append(ing)
+            ele["ingredients"]=new_lis
+
+
+
+
+
+
 
     def __init__(self,dish):
         html = requests.get(dish)
