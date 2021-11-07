@@ -666,3 +666,34 @@ Time_Units=set([
       "day",
       "days"
 ])
+Vegan_Protein=set([
+      "cauliflower",
+      "lentils",
+      "tempeh",
+      "king oyster mushrooms",
+      "cabbage",
+      "tofu",
+      "chickpeas",
+      "black beans",
+      "pinto"
+])
+Non_Vegan={"meat":[
+      "beef",
+      "pork",
+      "lamb",
+      "chicken",
+      "duck",
+      "turkey",
+      "fish",
+      "cod",
+      "crab",
+      "clam",
+      "mussels",
+      "shrimp",
+      "salmon",
+      "tuna",
+      "tilapia",
+      "rib",
+      "sirloin",
+      "brisket"
+]}

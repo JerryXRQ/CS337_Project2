@@ -18,14 +18,18 @@ def main():
     if dish=="quit":
         return
 
-    dic=parse_tools.key_info(dish)
+    original=parse_tools.recipe(dish)
+    original.print_ingredients()
+    original.print_steps()
     det=True
+    transformed=[]
     while det:
         action=input("What action do you want to perform: ")
         if action=="quit":
             det=False
-        else:
-            print(dic)
+        elif action=="vegetarian":
+            modified=parse_tools.recipe(dish)
+
     return
 
 if __name__ == '__main__':
