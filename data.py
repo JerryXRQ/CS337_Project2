@@ -394,6 +394,7 @@ Method_Primary=set([
     ])
 
 Method_Secondary=set([
+      "add",
       "bake",
       "beat",
       "boil",
@@ -701,5 +702,43 @@ Non_Vegan={"meat":[
       "tilapia",
       "rib",
       "sirloin",
-      "brisket"
+      "brisket",
+      "bacon",
+      "bison",
+      "goose",
+      "mutton",
+      "venison",
+      "catfish",
+      "ham",
+      "lobster",
+      "octopus"
 ]}
+
+Vegetable=set([
+      "potatoes",
+      "potato",
+      "tomatoes",
+      "tomato",
+      "onions",
+      "carrots",
+      "lettuce",
+      "bell peppers",
+      "broccoli",
+      "cucumbers",
+      "celery",
+      "mushrooms",
+      "mushroom",
+      "corn",
+      "spinach",
+      "green beans",
+      "cauliflower",
+      "cabbage",
+      "asparagus",
+      "brussel sprouts",
+      "crookneck",
+      "edamame",
+      "eggplant",
+      "pumkin",
+      "chickpeas"
+])
+#Intentionally ignored ingredients that serve as seasonings.

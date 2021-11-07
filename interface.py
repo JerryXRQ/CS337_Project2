@@ -2,6 +2,7 @@
 from bs4 import BeautifulSoup
 import requests
 import parse_tools
+import copy
 
 def search(dish):
 
@@ -28,11 +29,15 @@ def main():
         if action=="quit":
             det=False
         elif action=="vegetarian":
-            modified=parse_tools.recipe(dish)
-            modified.to_Vegetarian()
-            modified.print_ingredients()
-            modified.print_steps()
-
+            original.to_Vegetarian()
+            original.print_ingredients()
+            original.print_steps()
+        elif action=="meat":
+            original.to_Non_Vegetarian()
+            original.print_ingredients()
+            original.print_steps()
+        else:
+            print("We do not understand this. Please try again.")
     return
 
 if __name__ == '__main__':

@@ -174,7 +174,6 @@ class recipe():
         return steps
 
     def to_Vegetarian(self):
-        updated_ingredients={}
         replaced=[]
         replacement=[]
         for ele in self.ingredients.keys():
@@ -205,14 +204,55 @@ class recipe():
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]]=dic
 
-        for ele in self.steps:
+        for i in range(len(self.steps)):
             new_lis=[]
-            for ing in ele["ingredients"]:
+            for ing in self.steps[i]["ingredients"]:
                 if ing in replaced:
                     new_lis.append(replacement[replaced.index(ing)])
                 else:
                     new_lis.append(ing)
-            ele["ingredients"]=new_lis
+            self.steps[i]["ingredients"]=new_lis
+
+
+    def to_Non_Vegetarian(self):
+        replaced=[]
+        replacement=[]
+        for ele in self.ingredients.keys():
+            vege=False
+            for words in ele.split():
+                if words in data.Vegetable:
+                    vege=True
+                    break
+            if vege:
+                replaced.append(ele)
+                find=random.sample(data.Non_Vegan["meat"],1)
+                while find[0] in replacement and len(replacement)<len(data.Non_Vegan["meat"]):
+                    find=random.sample(data.Non_Vegan["meat"],1)
+                replacement.append(find[0])
+        print(replaced,replacement)
+        for ele in range(len(replaced)):
+            dic={}
+            dic["name"]=replacement[ele]
+            dic["quantity"]=self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"]=self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = []
+            for w in self.ingredients[replaced[ele]]["descriptions"]:
+                if w not in data.descriptors["veggie"]:
+                    dic["descriptions"].append(w)
+
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]]=dic
+
+        for i in range(len(self.steps)):
+            new_lis = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis.append(replacement[replaced.index(ing)])
+                else:
+                    new_lis.append(ing)
+            self.steps[i]["ingredients"] = new_lis
 
 
 
