@@ -5,6 +5,7 @@ from collections import defaultdict
 import data
 import random
 from fractions import Fraction
+from math import floor
 
 class recipe():
     ingredients = {}
@@ -164,6 +165,12 @@ class recipe():
 
         #print(sentences)
         for sentence in sentences:
+            sentence=sentence.replace(" 1/2",".5")
+            sentence=sentence.replace("1/2", ".5")
+            sentence=sentence.replace(" 1/4",".25")
+            sentence=sentence.replace("1/4", ".25")
+            sentence=sentence.replace(",","")
+            print(sentence)
             dic={}
             temp={}
             lis=sentence.split()
@@ -372,6 +379,17 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
+
+    def scale(self,ratio):
+        for ele in self.ingredients.keys():
+            self.ingredients[ele]["quantity"]*=ratio
+
+        for ele in range(len(self.steps)):
+            if len(self.steps[ele]["time"])==2:
+                num=self.steps[ele]["time"]["quantity"]
+                num*=ratio**0.5
+                num=floor(num)
+                self.steps[ele]["time"]["quantity"]=num
 
 
 

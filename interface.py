@@ -43,6 +43,14 @@ def main():
             original.to_Unhealthy()
             original.print_ingredients()
             original.print_steps()
+        elif action=="double":
+            original.scale(2.0)
+            original.print_ingredients()
+            original.print_steps()
+        elif action=="half":
+            original.scale(0.5)
+            original.print_ingredients()
+            original.print_steps()
         else:
             print("We do not understand this. Please try again.")
     return
