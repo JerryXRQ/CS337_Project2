@@ -15,13 +15,19 @@ def search(dish):
 
 def main():
     print("Welcome to Recipe Master!")
-    dish = input("Please enter the url of the recipe: ")
-    if dish=="quit":
-        return
-
-    original=parse_tools.recipe(dish)
-    original.print_ingredients()
-    original.print_steps()
+    urlin=True
+    original=None
+    while urlin:
+        dish = input("Please enter the url of the recipe: ")
+        if dish=="quit":
+            return
+        try:
+            original=parse_tools.recipe(dish)
+            original.print_ingredients()
+            original.print_steps()
+            urlin=False
+        except:
+            print("Something went wrong when retrieving information from the url")
     det=True
     while det:
         action=input("What action do you want to perform: ")
