@@ -4,6 +4,7 @@ import requests
 from collections import defaultdict
 import data
 import random
+from fractions import Fraction
 
 class recipe():
     ingredients = {}
@@ -53,35 +54,55 @@ class recipe():
         prep=[]
         descriptions=[]
         #print(words)
-        for e in words:
-            if e[0]=="(":
-                temp=temp.replace(e,"")
-                temp=temp.replace("  "," ")
-                additional.append(e)
-            elif e[-1]==")":
-                temp = temp.replace(e, "")
+        e=0
+        while e < len(words):
+            if words[e][0]=="(":
+                desc=words[e][1:]
+                temp = temp.replace(words[e], "")
                 temp = temp.replace("  ", " ")
-                additional.append(e)
+                e+=1
+                while e<len(words) and words[e][-1]!=")":
+                    temp=temp.replace(words[e],"")
+                    temp=temp.replace("  "," ")
+                    desc+=" "+words[e]
+                    e+=1
+                temp = temp.replace(words[e], "")
+                temp = temp.replace("  ", " ")
+                desc+=words[e][:len(words[e])-1]
+            e+=1
         update=temp.split()
 
         found=False
+        if words[0][0] in set([".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]):
+            quantity = float(words[0])
+            unit = "Count"
+            name = " ".join(update[1:])
+            found=True
         for w in range(len(update)):
             if update[w] in data.Liquid_Measurements or update[w] in data.Solid_Measurements:
-                if w>0:
+                if w>0 and not found:
                     try:
                         quantity=float(update[w-1])
                         unit=update[w]
                         name=" ".join(update[w+1:])
                         found=True
-                        break
                     except:
                         found=False
+                elif w>0:
+                    try:
+                        q=float(update[w-1])
+                        unit=update[w]
+                    except:
+                        try:
+                            q = float(Fraction(update[w - 1]))
+                            add = str(q)+" "+update[w]
+                            additional.append(add)
+                            name=name.replace(update[w],"")
+                            name=name.replace(update[w-1],"")
+                            name=name.replace("  ","")
+                        except:
+                            continue
         if not found:
-            if words[0][0] in set([".","0","1","2","3","4","5","6","7","8","9"]):
-                quantity=float(words[0])
-                unit="Count"
-                name=" ".join(update[1:])
-            else:
                 quantity=0
                 name=" ".join(update)
                 unit="Based on Preference"

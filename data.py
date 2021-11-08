@@ -249,7 +249,8 @@ descriptors= {
             "folded",
             "fragrant",
             "fresh",
-            "fried"
+            "fried",
+            "strips"
       ]),
       "seafood": set([
             "cooked",
