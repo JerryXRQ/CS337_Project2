@@ -39,6 +39,10 @@ def main():
             original.to_Healty()
             original.print_ingredients()
             original.print_steps()
+        elif action=="unhealthy":
+            original.to_Unhealthy()
+            original.print_ingredients()
+            original.print_steps()
         else:
             print("We do not understand this. Please try again.")
     return

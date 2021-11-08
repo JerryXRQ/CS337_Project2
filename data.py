@@ -250,7 +250,8 @@ descriptors= {
             "fragrant",
             "fresh",
             "fried",
-            "strips"
+            "strips",
+            "thinly"
       ]),
       "seafood": set([
             "cooked",
@@ -783,5 +784,41 @@ Make_Healthy={"approach":{
             "pork":"beef",
             "noodles":"zucchini noodles",
             "potato chips":"popcorn"
+      }
+}
+
+Make_Unhealthy={"approach":{
+      "broil":"grill",
+      "steam":"fry",
+      "saute":"fry"
+      },
+      "tools":{
+            "steamer":"deep fryer",
+            "oven":"grill",
+            "pan":"deep fryer"
+      }
+      ,
+      "ingredients":{
+            "honey":"sugar",
+            "sweet potato":"potato",
+            "beef":"pork",
+            "mushroom":"pork",
+            "milk":"creamer",
+            "bacon":"sausage",
+            "hummus":"mayo",
+            "broccoli":"potato",
+            "bell pepper":"bacon",
+            "cauliflower":"potato",
+            "edamame":"sausage",
+            "chickpeas":"sausage",
+            "carrot":"potato",
+            "jam":"sugar",
+            "olive oil":"butter",
+            "nuts":"chocolate",
+            "greek yogurt":"sour cream",
+            "cinnamon":"sugar",
+            "applesauce":"sugar",
+            "maple syrup":"sugar"
+
       }
 }
