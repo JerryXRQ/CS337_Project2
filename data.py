@@ -266,7 +266,6 @@ descriptors= {
             "extra virgin",
             "frying",
             "ground",
-            "heavy",
             "hickory flavored",
             "low sodium",
             "non dairy",
@@ -390,7 +389,8 @@ Method_Primary=set([
       "blend",
       "steam",
       "saute",
-      "poach"
+      "poach",
+      "deep fry"
     ])
 
 Method_Secondary=set([
@@ -407,6 +407,7 @@ Method_Secondary=set([
       "crush",
       "dip",
       "drain",
+      "dry",
       "chill",
       "crumble",
       "flour",
@@ -447,7 +448,9 @@ Method_Secondary=set([
       "turn",
       "whisk",
       "coat",
-      "place"
+      "place",
+      "rub",
+      "lower"
     ])
 Tools=set([
     "apple corer",
@@ -535,6 +538,7 @@ Tools=set([
     "french whisk",
     "frying pan",
     "funnel",
+    "fryer",
     "garlic press",
     "grapefruit knife",
     "grater",
@@ -597,6 +601,7 @@ Tools=set([
     "pastry blender",
     "pastry brush",
     "pastry wheel",
+    "paper towel",
     "peeler",
     "pepper grinder",
     "pepper mill",
@@ -719,6 +724,7 @@ Vegetable=set([
       "potato",
       "tomatoes",
       "tomato",
+      "onion",
       "onions",
       "carrots",
       "lettuce",
@@ -742,3 +748,39 @@ Vegetable=set([
       "chickpeas"
 ])
 #Intentionally ignored ingredients that serve as seasonings.
+
+Make_Healthy={"approach":{
+      "fry":"air fry",
+      "grill":"broil"
+      },
+      "tools":{
+            "fryer":"air fryer",
+            "grill":"oven"
+      }
+      ,
+      "ingredients":{
+            "sugar":"honey",
+            "white sugar":"honey",
+            "brown sugar":"honey",
+            "sour cream":"greek yogurt",
+            "flour":"whole wheat flour",
+            "butter":"margarine",
+            "whole milk":"skim milk",
+            "peanut butter":"powdered peanut",
+            "baking powder":"baking soda",
+            "chocolate":"berries",
+            "cream cheese":"fat-free cream",
+            "mayonnaise":"plain yogurt",
+            "mayo":"plain yogurt",
+            "white bread":"wheat bread",
+            "sausage":"bacon",
+            "egg":"egg white",
+            "pasta":"whole grain pasta",
+            "spaghetti":"whole grain spaghetti",
+            "potato":"cauliflower",
+            "potatoes":"cauliflowers",
+            "pork":"beef",
+            "noodles":"zucchini noodles",
+            "potato chips":"popcorn"
+      }
+}

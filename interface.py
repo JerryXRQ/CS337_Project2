@@ -23,7 +23,6 @@ def main():
     original.print_ingredients()
     original.print_steps()
     det=True
-    transformed=[]
     while det:
         action=input("What action do you want to perform: ")
         if action=="quit":
@@ -34,6 +33,10 @@ def main():
             original.print_steps()
         elif action=="meat":
             original.to_Non_Vegetarian()
+            original.print_ingredients()
+            original.print_steps()
+        elif action=="healthy":
+            original.to_Healty()
             original.print_ingredients()
             original.print_steps()
         else:

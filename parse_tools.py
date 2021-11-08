@@ -105,6 +105,12 @@ class recipe():
             name=name[1:]
         if name[len(name)-1]==" ":
             name=name[:len(name)-1]
+        name=name.replace("for","")
+        name=name.replace("  "," ")
+        name = name.replace(" or", "")
+        name = name.replace(" and","")
+        name=name.replace(" as needed","")
+        name=name.replace(" to taste","")
         dic["quantity"]=quantity
         dic["unit"]=unit
         dic["name"]=name.lower()
@@ -253,6 +259,52 @@ class recipe():
                 else:
                     new_lis.append(ing)
             self.steps[i]["ingredients"] = new_lis
+
+
+    def to_Healty(self):
+        replaced = []
+        replacement = []
+        for ele in self.ingredients.keys():
+            if ele in data.Make_Healthy["ingredients"]:
+                replaced.append(ele)
+                replacement.append(data.Make_Healthy["ingredients"][ele])
+
+        for ele in range(len(replaced)):
+            dic={}
+            dic["name"]=replacement[ele]
+            dic["quantity"]=self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"]=self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]]=dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            new_lis_app=[]
+            new_lis_tools=[]
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
+
+
+            for app in self.steps[i]["methods"]:
+                if app in data.Make_Healthy["approach"]:
+                    new_lis_app.append(data.Make_Healthy["approach"][app])
+                else:
+                    new_lis_app.append(app)
+            self.steps[i]["methods"] = new_lis_app
+
+            for app in self.steps[i]["tools"]:
+                if app in data.Make_Healthy["tools"]:
+                    new_lis_tools.append(data.Make_Healthy["tools"][app])
+                else:
+                    new_lis_tools.append(app)
+            self.steps[i]["tools"] = new_lis_tools
 
 
 
