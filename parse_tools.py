@@ -6,6 +6,7 @@ import data
 import random
 from fractions import Fraction
 from math import floor
+import re
 
 class recipe():
     ingredients = {}
@@ -44,6 +45,7 @@ class recipe():
         temp=temp.replace("½",".5")
         temp=temp.replace("⅓",".33")
         temp = temp.replace("- ", "")
+        temp=temp.replace("-inch"," inch")
         dic={}
         #ele.replace()
         prep_result=set(["into","to"])
@@ -74,7 +76,7 @@ class recipe():
         update=temp.split()
 
         found=False
-        if words[0][0] in set([".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) and words[1] not in data.Liquid_Measurements and  words[1] not in data.Solid_Measurements:
+        if words[0][0] in set([".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) and words[1] not in data.Liquid_Measurements and words[1] not in data.Solid_Measurements:
             quantity = float(words[0])
             unit = "Count"
             name = " ".join(update[1:])
@@ -123,8 +125,12 @@ class recipe():
                     name = name.replace(split[index], "")
                     name = name.replace("  ", " ")
                     descriptions.append(split[index])
+        if len(name)==0:
+            return None
         if name[0]==" ":
             name=name[1:]
+        if len(name)==0:
+            return None
         if name[len(name)-1]==" ":
             name=name[:len(name)-1]
         name=name.replace("for","")
@@ -132,6 +138,7 @@ class recipe():
         name = name.replace(" or", "")
         name = name.replace(" and","")
         name=name.replace(" as needed","")
+        name = name.replace("as needed", "")
         name=name.replace(" to taste","")
         dic["quantity"]=quantity
         dic["unit"]=unit
@@ -165,14 +172,18 @@ class recipe():
 
         #print(sentences)
         for sentence in sentences:
-            sentence=sentence.replace(" 1/2",".5")
+            sentence=sentence.replace(" 1/2"," .5")
             sentence=sentence.replace("1/2", ".5")
-            sentence=sentence.replace(" 1/4",".25")
+            sentence=sentence.replace(" 1/4"," .25")
             sentence=sentence.replace("1/4", ".25")
+            sentence = sentence.replace(" 3/4", " .75")
+            sentence = sentence.replace("3/4", ".75")
             sentence=sentence.replace(",","")
-            print(sentence)
             dic={}
             temp={}
+            for st in ["   step 1   ","   step 2   ","   step 3   ","   step 4   ","   step 5   ","   step 6   ","   step 7   ","   step 8   ","   step 9   ","   step 10   "]:
+                sentence=sentence.replace(st,"")
+            dic["raw"] = sentence
             lis=sentence.split()
             for ele in range(len(lis)):
                 if lis[ele] in data.Time_Units:
@@ -222,7 +233,11 @@ class recipe():
                 while find[0] in replacement and len(replacement)<len(data.Vegan_Protein):
                     find=random.sample(data.Vegan_Protein,1)
                 replacement.append(find[0])
-        print(replaced,replacement)
+        if len(replaced) == 0:
+            print("Sorry, we fail to find a replacement. This recipe is already vegetarian.")
+        else:
+            print("We found the following items that need to be replaced: ", replaced)
+            print("We replaced them with: ", replacement)
         for ele in range(len(replaced)):
             dic={}
             dic["name"]=replacement[ele]
@@ -246,6 +261,13 @@ class recipe():
                 else:
                     new_lis.append(ing)
             self.steps[i]["ingredients"]=new_lis
+            sp = self.steps[i]["raw"].split()
+            for ele in sp:
+                if ele in replaced:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, replacement[replaced.index(ele)])
+                elif ele in data.descriptors["meat"]:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
 
 
     def to_Non_Vegetarian(self):
@@ -263,7 +285,12 @@ class recipe():
                 while find[0] in replacement and len(replacement)<len(data.Non_Vegan["meat"]):
                     find=random.sample(data.Non_Vegan["meat"],1)
                 replacement.append(find[0])
-        print(replaced,replacement)
+        if len(replaced)==0:
+            print("Sorry, we fail to find a replacement. This recipe is already non-vegetarian.")
+        else:
+            print("We found the following items that need to be replaced: ",replaced)
+            print("We replaced them with: ",replacement)
+
         for ele in range(len(replaced)):
             dic={}
             dic["name"]=replacement[ele]
@@ -286,16 +313,44 @@ class recipe():
                     new_lis.append(replacement[replaced.index(ing)])
                 else:
                     new_lis.append(ing)
+            sp=self.steps[i]["raw"].split()
+            for ele in sp:
+                if ele in replaced:
+                    self.steps[i]["raw"]=self.steps[i]["raw"].replace(ele,replacement[replaced.index(ele)])
+                elif ele in data.descriptors["veggie"]:
+                    self.steps[i]["raw"]=self.steps[i]["raw"].replace(ele,"")
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+
+
             self.steps[i]["ingredients"] = new_lis
 
 
     def to_Healty(self):
         replaced = []
         replacement = []
+        det=False
+        present=defaultdict(list)
         for ele in self.ingredients.keys():
             if ele in data.Make_Healthy["ingredients"]:
                 replaced.append(ele)
                 replacement.append(data.Make_Healthy["ingredients"][ele])
+                present["Ingredient Change: "].append([replaced[-1],replacement[-1]])
+                det=True
+        for i in range(len(self.steps)):
+            for app in self.steps[i]["methods"]:
+                if app in data.Make_Healthy["approach"]:
+                    present["Method Change: "].append([app, data.Make_Healthy["approach"][app]])
+                    det=True
+            for app in self.steps[i]["tools"]:
+                if app in data.Make_Healthy["tools"]:
+                    present["Tool Change: "].append([app, data.Make_Healthy["tools"][app]])
+                    det=True
+        if not det:
+            print("Sorry, we cannot find any transformations that can make this recipe healthier")
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys,present[keys])
 
         for ele in range(len(replaced)):
             dic={}
@@ -315,6 +370,7 @@ class recipe():
             for ing in self.steps[i]["ingredients"]:
                 if ing in replaced:
                     new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"]=self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
                 else:
                     new_lis_ing.append(ing)
             self.steps[i]["ingredients"] = new_lis_ing
@@ -323,13 +379,16 @@ class recipe():
             for app in self.steps[i]["methods"]:
                 if app in data.Make_Healthy["approach"]:
                     new_lis_app.append(data.Make_Healthy["approach"][app])
+                    self.steps[i]["raw"]=self.steps[i]["raw"].replace(app,data.Make_Healthy["approach"][app])
                 else:
                     new_lis_app.append(app)
+
             self.steps[i]["methods"] = new_lis_app
 
             for app in self.steps[i]["tools"]:
                 if app in data.Make_Healthy["tools"]:
                     new_lis_tools.append(data.Make_Healthy["tools"][app])
+                    self.steps[i]["raw"]=self.steps[i]["raw"].replace(app, data.Make_Healthy["tools"][app])
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
@@ -338,10 +397,29 @@ class recipe():
     def to_Unhealthy(self):
         replaced = []
         replacement = []
+        det = False
+        present = defaultdict(list)
         for ele in self.ingredients.keys():
             if ele in data.Make_Unhealthy["ingredients"]:
                 replaced.append(ele)
                 replacement.append(data.Make_Unhealthy["ingredients"][ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+        for i in range(len(self.steps)):
+            for app in self.steps[i]["methods"]:
+                if app in data.Make_Unhealthy["approach"]:
+                    present["Method Change: "].append([app, data.Make_Unhealthy["approach"][app]])
+                    det = True
+            for app in self.steps[i]["tools"]:
+                if app in data.Make_Unhealthy["tools"]:
+                    present["Tool Change: "].append([app, data.Make_Unhealthy["tools"][app]])
+                    det = True
+        if not det:
+            print("Sorry, we cannot find any transformations that can make this recipe more unhealthy")
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
 
         for ele in range(len(replaced)):
             dic={}
@@ -361,6 +439,7 @@ class recipe():
             for ing in self.steps[i]["ingredients"]:
                 if ing in replaced:
                     new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
                 else:
                     new_lis_ing.append(ing)
             self.steps[i]["ingredients"] = new_lis_ing
@@ -369,6 +448,7 @@ class recipe():
             for app in self.steps[i]["methods"]:
                 if app in data.Make_Unhealthy["approach"]:
                     new_lis_app.append(data.Make_Unhealthy["approach"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Make_Unhealthy["approach"][app])
                 else:
                     new_lis_app.append(app)
             self.steps[i]["methods"] = new_lis_app
@@ -376,6 +456,7 @@ class recipe():
             for app in self.steps[i]["tools"]:
                 if app in data.Make_Unhealthy["tools"]:
                     new_lis_tools.append(data.Make_Unhealthy["tools"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Make_Unhealthy["tools"][app])
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
@@ -391,6 +472,26 @@ class recipe():
                 num=floor(num)
                 self.steps[ele]["time"]["quantity"]=num
 
+            s=self.steps[ele]["raw"].split()
+            #print(s)
+            change_pos=[]
+            for pos in range(len(s)):
+                if len(self.steps[ele]["time"])>0 and s[pos] in self.steps[ele]["time"]["unit"]:
+                    print(s,ele)
+                    try:
+                        change_pos.append([pos-1,floor(float(s[pos-1])*ratio**0.5)])
+                    except:
+                        continue
+                elif s[pos] in data.Liquid_Measurements or s[pos] in data.Solid_Measurements:
+                    try:
+                        change_pos.append([pos - 1, float(s[pos - 1]) * ratio])
+                    except:
+                        continue
+            for pair in change_pos:
+                s[pair[0]]=str(pair[1])
+            self.steps[ele]["raw"]=" ".join(s)
+
+
 
 
 
@@ -405,8 +506,21 @@ class recipe():
         res=bs.find_all("span",attrs={"class": "ingredients-item-name"})
         for ele in res:
             #print(ele.get_text())
-            temp=self.process_ingredients(ele.get_text())
-            self.ingredients[temp['name']]=temp
+            s=ele.get_text().split()
+            separate=-1
+            for i in range(len(s)):
+                if s[i]=="and" or s[i]=="or":
+                    separate=i
+            if separate==-1:
+                temp=self.process_ingredients(ele.get_text())
+                self.ingredients[temp['name']]=temp
+            else:
+                temp = self.process_ingredients(" ".join(s[:separate]))
+                if temp:
+                    self.ingredients[temp['name']] = temp
+                temp = self.process_ingredients(" ".join(s[separate+1:]))
+                if temp and len(temp['name'])>3:
+                    self.ingredients[temp['name']] = temp
         print("Ingredients Parsing Finished")
         #Find Ingredients
 

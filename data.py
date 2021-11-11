@@ -73,6 +73,7 @@ Solid_Measurements=set([
       "kilograms",
       "lb",
       "lbs",
+      "loaf",
       "ounce",
       "ounces",
       "oz",
@@ -157,7 +158,8 @@ prep=set( [
       "thawed",
       "thawed",
       "torn",
-      "unsalted"
+      "unsalted",
+      "patted"
     ])
 
 descriptors= {
@@ -171,8 +173,11 @@ descriptors= {
             "refrigerated",
             "skinless",
             "tender",
-            "warm",
-            "halves"
+            "halves",
+            "whole",
+            "skin",
+            "bone",
+            "breast"
       ]),
       "other": set([
             "finger-sized",
@@ -248,10 +253,10 @@ descriptors= {
             "fluffy",
             "folded",
             "fragrant",
-            "fresh",
             "fried",
             "strips",
-            "thinly"
+            "thinly",
+            "slices"
       ]),
       "seafood": set([
             "cooked",
@@ -276,7 +281,8 @@ descriptors= {
             "room temperature",
             "superfine",
             "sweetened",
-            "unsweetened"
+            "unsweetened",
+            "black"
       ]),
       "style": set([
             "african",
@@ -331,6 +337,7 @@ descriptors= {
             "japanese",
             "kenyan",
             "korean",
+            "kosher",
             "liberian",
             "libyan",
             "lithuanian",
@@ -376,7 +383,8 @@ descriptors= {
             "organic",
             "packed",
             "ripe",
-            "very ripe"
+            "very ripe",
+            "flat-leaf"
       ])
       }
 Method_Primary=set([
@@ -396,6 +404,7 @@ Method_Primary=set([
     ])
 
 Method_Secondary=set([
+      "arrange",
       "add",
       "bake",
       "beat",
@@ -802,6 +811,8 @@ Make_Unhealthy={"approach":{
             "honey":"sugar",
             "sweet potato":"potato",
             "beef":"pork",
+            "chicken":"pork",
+            "salmon":"pork",
             "mushroom":"pork",
             "milk":"creamer",
             "bacon":"sausage",
@@ -819,6 +830,5 @@ Make_Unhealthy={"approach":{
             "cinnamon":"sugar",
             "applesauce":"sugar",
             "maple syrup":"sugar"
-
       }
 }
