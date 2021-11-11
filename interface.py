@@ -57,6 +57,13 @@ def main():
             original.scale(0.5)
             original.print_ingredients()
             original.print_steps()
+        elif action=="gluten free":
+            original.gluten_free()
+            original.print_ingredients()
+            original.print_steps()
+
+
+
         else:
             print("We do not understand this. Please try again.")
     return

@@ -229,6 +229,7 @@ descriptors= {
             "crystalized",
             "curdled",
             "cold",
+            "cubes",
             "decadent",
             "delactable",
             "dense",
@@ -831,4 +832,26 @@ Make_Unhealthy={"approach":{
             "applesauce":"sugar",
             "maple syrup":"sugar"
       }
+}
+
+Gluten_Free={
+      "farro":"rice",
+      "barley":"quinoa",
+      "bulgur":"millet",
+      "spelt":"buckwheat",
+      "kamut":"rice",
+      "breadcrumbs":"chickpea crumbs",
+      "noodle":"rice noodles",
+      "noodles":"rice noodles",
+      "pasta":"kelp noodles",
+      "spaghetti":"spaghetti squash",
+      "fettuccine":"veggie noodles",
+      "macaroni":"kelp noodles",
+      "bow ties":"rice noodles",
+      "tortillas":"corn tortillas",
+      "flour tortillas":"corn tortillas",
+      "soy sauce":"coconut aminos",
+      "pizza crust":"cauliflower crust",
+      "flour":"rice flour",
+      "rigatoni pasta":"kelp noodles"
 }

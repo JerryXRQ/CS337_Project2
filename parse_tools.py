@@ -76,7 +76,7 @@ class recipe():
         update=temp.split()
 
         found=False
-        if words[0][0] in set([".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) and words[1] not in data.Liquid_Measurements and words[1] not in data.Solid_Measurements:
+        if update[0][0] in set([".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) and update[1] not in data.Liquid_Measurements and update[1] not in data.Solid_Measurements:
             quantity = float(words[0])
             unit = "Count"
             name = " ".join(update[1:])
@@ -89,12 +89,23 @@ class recipe():
                         unit=update[w]
                         name=" ".join(update[w+1:])
                         found=True
+                        break
                     except:
-                        found=False
+                        try:
+                            q = float(Fraction(update[w - 1]))
+                            unit=update[w]
+                            name=" ".join(update[w+1:])
+                            found=True
+                        except:
+                            found=False
                 elif w>0:
                     try:
                         q=float(update[w-1])
                         unit=update[w]
+                        name = name.replace(update[w], "")
+                        name = name.replace(update[w - 1], "")
+                        name = name.replace("  ", "")
+                        additional.append(str(q)+" "+unit)
                     except:
                         try:
                             q = float(Fraction(update[w - 1]))
@@ -109,7 +120,6 @@ class recipe():
                 quantity=0
                 name=" ".join(update)
                 unit="Based on Preference"
-        print(name.split())
         split=name.split()
         for index in range(len(split)):
             if split[index] in data.prep:
@@ -493,8 +503,45 @@ class recipe():
 
 
 
+    def gluten_free(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        for ele in self.ingredients.keys():
+            if ele in data.Gluten_Free:
+                replaced.append(ele)
+                replacement.append(data.Gluten_Free[ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
 
+        if not det:
+            print("Sorry, we cannot find any transformation. This recipe is already gluten freehttps://www.allrecipes.com/recipe/240955/eggplant-pasta/")
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
 
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
 
 
 
