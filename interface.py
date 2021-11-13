@@ -40,24 +40,30 @@ def main():
         action = input("What action do you want to perform: ")
         if action == "quit":
             det = False
+        elif len(action)>4 and action[:4]=="http":
+            original.initialize(action)
+            original.print_ingredients()
+            original.print_steps()
+            print("reset successfully")
+
         elif action not in all_actions:
             print("We do not understand this. Please try again.")
         elif action == "vegetarian":
-            original.to_Vegetarian()
-            original.print_ingredients()
-            original.print_steps()
+            if original.to_Vegetarian():
+                original.print_ingredients()
+                original.print_steps()
         elif action == "meat":
-            original.to_Non_Vegetarian()
-            original.print_ingredients()
-            original.print_steps()
+            if original.to_Non_Vegetarian():
+                original.print_ingredients()
+                original.print_steps()
         elif action == "healthy":
-            original.to_Healty()
-            original.print_ingredients()
-            original.print_steps()
+            if original.to_Healty():
+                original.print_ingredients()
+                original.print_steps()
         elif action == "unhealthy":
-            original.to_Unhealthy()
-            original.print_ingredients()
-            original.print_steps()
+            if original.to_Unhealthy():
+                original.print_ingredients()
+                original.print_steps()
         elif action == "double":
             original.scale(2.0)
             original.print_ingredients()
@@ -67,13 +73,13 @@ def main():
             original.print_ingredients()
             original.print_steps()
         elif action == "gluten free":
-            original.gluten_free()
-            original.print_ingredients()
-            original.print_steps()
+            if original.gluten_free():
+                original.print_ingredients()
+                original.print_steps()
         elif action == "chinese":
-            original.chinese()
-            original.print_ingredients()
-            original.print_steps()
+            if original.chinese():
+                original.print_ingredients()
+                original.print_steps()
     return
 
 

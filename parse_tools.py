@@ -253,6 +253,7 @@ class recipe():
                 replacement.append(find[0])
         if len(replaced) == 0:
             print("Sorry, we fail to find a replacement. This recipe is already vegetarian.")
+            return True
         else:
             print("We found the following items that need to be replaced: ", replaced)
             print("We replaced them with: ", replacement)
@@ -286,6 +287,7 @@ class recipe():
                 elif ele in data.descriptors["meat"]:
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+        return True
 
 
     def to_Non_Vegetarian(self):
@@ -305,6 +307,7 @@ class recipe():
                 replacement.append(find[0])
         if len(replaced)==0:
             print("Sorry, we fail to find a replacement. This recipe is already non-vegetarian.")
+            return False
         else:
             print("We found the following items that need to be replaced: ",replaced)
             print("We replaced them with: ",replacement)
@@ -341,7 +344,7 @@ class recipe():
 
 
             self.steps[i]["ingredients"] = new_lis
-
+        return True
 
     def to_Healty(self):
         replaced = []
@@ -365,6 +368,7 @@ class recipe():
                     det=True
         if not det:
             print("Sorry, we cannot find any transformations that can make this recipe healthier")
+            return False
         else:
             print("We found the following substitutions: ")
             for keys in present:
@@ -410,7 +414,7 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
-
+        return True
 
     def to_Unhealthy(self):
         replaced = []
@@ -434,6 +438,7 @@ class recipe():
                     det = True
         if not det:
             print("Sorry, we cannot find any transformations that can make this recipe more unhealthy")
+            return False
         else:
             print("We found the following substitutions: ")
             for keys in present:
@@ -478,6 +483,7 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
+        return True
 
 
     def scale(self,ratio):
@@ -525,6 +531,7 @@ class recipe():
 
         if not det:
             print("Sorry, we cannot find any transformation. This recipe is already gluten free")
+            return False
         else:
             print("We found the following substitutions: ")
             for keys in present:
@@ -550,6 +557,7 @@ class recipe():
                 else:
                     new_lis_ing.append(ing)
             self.steps[i]["ingredients"] = new_lis_ing
+        return True
 
 
     def chinese(self):
@@ -574,6 +582,7 @@ class recipe():
                     det = True
         if not det:
             print("Sorry, we cannot find any transformations. This particular recipe could not be made in Chinese style.")
+            return False
         else:
             print("We found the following substitutions: ")
             for keys in present:
@@ -617,7 +626,14 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
+        return True
 
+    def initialize(self,url):
+        self.ingredients = {}
+        self.primary_method = []
+        self.secondary_method = []
+        self.steps = []
+        self.__init__(url)
 
     def __init__(self,dish):
         html = requests.get(dish)
@@ -671,5 +687,3 @@ class recipe():
             self.steps+=self.process_steps(ele.get_text())
 
 
-if __name__ == '__main__':
-    main()

@@ -244,6 +244,7 @@ descriptors= {
             "feathery",
             "fibrous",
             "fiery",
+            "finely",
             "filled",
             "filling",
             "finger licking good",
@@ -864,23 +865,35 @@ Chinese = \
             "immerse":"braise",
             "bath":"braise",
             "broil":"roast",
-            "grill":"roast"
+            "grill":"roast",
+            "bake":"steam"
       },
       "tools":{
             "fork":"chopsticks",
             "spoon":"cooking shovel",
             "pan":"wok",
             "tray":"wok",
+            "oven":"steamer"
       },
       "ingredients":{
             "chili":"dried chili",
             "hot pepper":"chili powder",
-            "pepper":"Sichuan Peppercorns",
-            "spice":"Five Spice Powder",
+            "pepper":"sichuan peppercorns",
+            "spice":"five spice powder",
             "parsley":"bay leaf",
             "coriander":"bay leaf",
             "seasoning":"parsley",
             "salt":"soy sauce",
             "lemon":"vinegar",
+            "olive oil": "sesame oil",
+            "vegetable oil":"sesame oil",
+            "butter":"sesame oil",
+            "starch":"cornstarch",
+            "bbq sauce":"oyster sauce",
+            "tomato sauce":"hoisin sauce",
+            "ketchup":"hosin sauce",
+            "cabbage":"bok choy",
+            "mushroom":"shiitake mushroom",
+            "mushrooms":"shiitake mushrooms"
       }
 }
