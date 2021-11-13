@@ -13,6 +13,8 @@ class recipe():
     primary_method = []
     secondary_method=[]
     steps=[]
+
+
     def print_ingredients(self):
         for ele in self.ingredients.keys():
             print("Name: ", ele)
@@ -25,6 +27,7 @@ class recipe():
 
         return
 
+
     def print_steps(self):
         counter=1
         for ele in self.steps:
@@ -32,6 +35,7 @@ class recipe():
                 print("Step ",counter,e,": ",ele[e])
             print("\n")
             counter+=1
+
 
     def print_methods(self):
         print("Primary Method: ",self.primary_method[0])
@@ -159,6 +163,7 @@ class recipe():
 
         return dic
 
+
     def process_methods_primary(self,step):
         counter=defaultdict(int)
         temp=step.lower()
@@ -167,6 +172,7 @@ class recipe():
                 counter[ele]+=1
         return counter
 
+
     def process_methods_secondary(self,step):
         counter=defaultdict(int)
         temp=step.lower()
@@ -174,6 +180,7 @@ class recipe():
             if ele in data.Method_Secondary:
                 counter[ele]+=1
         return counter
+
 
     def process_steps(self,step):
         target=step.lower()
@@ -227,6 +234,7 @@ class recipe():
             if len(dic["ingredients"])>0 or len(dic["methods"])>0 or len(dic["tools"])>0 or len(dic["time"])>0:
                 steps.append(dic)
         return steps
+
 
     def to_Vegetarian(self):
         replaced=[]
@@ -471,6 +479,7 @@ class recipe():
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
 
+
     def scale(self,ratio):
         for ele in self.ingredients.keys():
             self.ingredients[ele]["quantity"]*=ratio
@@ -502,7 +511,6 @@ class recipe():
             self.steps[ele]["raw"]=" ".join(s)
 
 
-
     def gluten_free(self):
         replaced = []
         replacement = []
@@ -516,7 +524,7 @@ class recipe():
                 det = True
 
         if not det:
-            print("Sorry, we cannot find any transformation. This recipe is already gluten freehttps://www.allrecipes.com/recipe/240955/eggplant-pasta/")
+            print("Sorry, we cannot find any transformation. This recipe is already gluten free")
         else:
             print("We found the following substitutions: ")
             for keys in present:
@@ -543,6 +551,72 @@ class recipe():
                     new_lis_ing.append(ing)
             self.steps[i]["ingredients"] = new_lis_ing
 
+
+    def chinese(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        for ele in self.ingredients.keys():
+            if ele in data.Chinese["ingredients"]:
+                replaced.append(ele)
+                replacement.append(data.Chinese["ingredients"][ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+        for i in range(len(self.steps)):
+            for app in self.steps[i]["methods"]:
+                if app in data.Chinese["approach"]:
+                    present["Method Change: "].append([app, data.Chinese["approach"][app]])
+                    det = True
+            for app in self.steps[i]["tools"]:
+                if app in data.Chinese["tools"]:
+                    present["Tool Change: "].append([app, data.Chinese["tools"][app]])
+                    det = True
+        if not det:
+            print("Sorry, we cannot find any transformations. This particular recipe could not be made in Chinese style.")
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
+
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            new_lis_app = []
+            new_lis_tools = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
+
+            for app in self.steps[i]["methods"]:
+                if app in data.Make_Unhealthy["approach"]:
+                    new_lis_app.append(data.Make_Unhealthy["approach"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Make_Unhealthy["approach"][app])
+                else:
+                    new_lis_app.append(app)
+            self.steps[i]["methods"] = new_lis_app
+
+            for app in self.steps[i]["tools"]:
+                if app in data.Make_Unhealthy["tools"]:
+                    new_lis_tools.append(data.Make_Unhealthy["tools"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Make_Unhealthy["tools"][app])
+                else:
+                    new_lis_tools.append(app)
+            self.steps[i]["tools"] = new_lis_tools
 
 
     def __init__(self,dish):

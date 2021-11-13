@@ -855,3 +855,32 @@ Gluten_Free={
       "flour":"rice flour",
       "rigatoni pasta":"kelp noodles"
 }
+
+
+Chinese = \
+      {"approach":{
+            "fry":"stir-fry",
+            "soak":"boil",
+            "immerse":"braise",
+            "bath":"braise",
+            "broil":"roast",
+            "grill":"roast"
+      },
+      "tools":{
+            "fork":"chopsticks",
+            "spoon":"cooking shovel",
+            "pan":"wok",
+            "tray":"wok",
+      },
+      "ingredients":{
+            "chili":"dried chili",
+            "hot pepper":"chili powder",
+            "pepper":"Sichuan Peppercorns",
+            "spice":"Five Spice Powder",
+            "parsley":"bay leaf",
+            "coriander":"bay leaf",
+            "seasoning":"parsley",
+            "salt":"soy sauce",
+            "lemon":"vinegar",
+      }
+}

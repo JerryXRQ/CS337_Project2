@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import requests
 import parse_tools
 import copy
+import re
+
 
 def search(dish):
 
@@ -21,52 +23,59 @@ def main():
         dish = input("Please enter the url of the recipe: ")
         if dish=="quit":
             return
+        if not re.search('allrecipes.com', dish):
+            print("Input should be a link from allrecipes.com. Please try again.")
+            continue
         try:
-            original=parse_tools.recipe(dish)
+            original = parse_tools.recipe(dish)
             original.print_ingredients()
             original.print_steps()
             urlin=False
         except:
-            print("Something went wrong when retrieving information from the url")
+            print("Something went wrong when retrieving information from the url.")
     det=True
     while det:
-        action=input("What action do you want to perform: ")
-        if action=="quit":
-            det=False
-        elif action=="vegetarian":
+        all_actions = ['vegetarian', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten free', 'chinese']
+        print(f"Available actions: {all_actions}")
+        action = input("What action do you want to perform: ")
+        if action == "quit":
+            det = False
+        elif action not in all_actions:
+            print("We do not understand this. Please try again.")
+        elif action == "vegetarian":
             original.to_Vegetarian()
             original.print_ingredients()
             original.print_steps()
-        elif action=="meat":
+        elif action == "meat":
             original.to_Non_Vegetarian()
             original.print_ingredients()
             original.print_steps()
-        elif action=="healthy":
+        elif action == "healthy":
             original.to_Healty()
             original.print_ingredients()
             original.print_steps()
-        elif action=="unhealthy":
+        elif action == "unhealthy":
             original.to_Unhealthy()
             original.print_ingredients()
             original.print_steps()
-        elif action=="double":
+        elif action == "double":
             original.scale(2.0)
             original.print_ingredients()
             original.print_steps()
-        elif action=="half":
+        elif action == "half":
             original.scale(0.5)
             original.print_ingredients()
             original.print_steps()
-        elif action=="gluten free":
+        elif action == "gluten free":
             original.gluten_free()
             original.print_ingredients()
             original.print_steps()
-
-
-
-        else:
-            print("We do not understand this. Please try again.")
+        elif action == "chinese":
+            original.chinese()
+            original.print_ingredients()
+            original.print_steps()
     return
+
 
 if __name__ == '__main__':
     main()
