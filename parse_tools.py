@@ -50,6 +50,8 @@ class recipe():
         temp=temp.replace("⅓",".33")
         temp = temp.replace("- ", "")
         temp=temp.replace("-inch"," inch")
+        temp=temp.replace(" or more","")
+        temp = temp.replace(" or to taste", "")
         dic={}
         #ele.replace()
         prep_result=set(["into","to"])
@@ -65,8 +67,14 @@ class recipe():
         while e < len(words):
             if words[e][0]=="(":
                 desc=words[e][1:]
-                temp = temp.replace(words[e], "")
-                temp = temp.replace("  ", " ")
+                if ")" in words[e]:
+                    desc.replace(")","")
+                    temp = temp.replace(words[e], "")
+                    temp = temp.replace("  ", " ")
+                    break
+                else:
+                    temp = temp.replace(words[e], "")
+                    temp = temp.replace("  ", " ")
                 e+=1
                 while e<len(words) and words[e][-1]!=")":
                     temp=temp.replace(words[e],"")
@@ -628,6 +636,61 @@ class recipe():
             self.steps[i]["tools"] = new_lis_tools
         return True
 
+    def lactose_free(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        des_rep=set()
+
+        for ele in self.ingredients.keys():
+            if ele in data.Lactose_Free:
+                replaced.append(ele)
+                replacement.append(data.Lactose_Free[ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+
+        if not det:
+            print("Sorry, we cannot find any transformation. This recipe is already lactose free")
+            return False
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
+
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = []
+            for w in self.ingredients[replaced[ele]]["descriptions"]:
+                if w not in data.descriptors["diary"]:
+                    dic["descriptions"].append(w)
+                else:
+                    des_rep.add(w)
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+
+                else:
+                    new_lis_ing.append(ing)
+            spl=self.steps[i]["raw"].split()
+            for words in spl:
+                if words in des_rep:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(words,"")
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", " ")
+            self.steps[i]["ingredients"] = new_lis_ing
+        return True
+
     def initialize(self,url):
         self.ingredients = {}
         self.primary_method = []
@@ -646,7 +709,7 @@ class recipe():
             s=ele.get_text().split()
             separate=-1
             for i in range(len(s)):
-                if s[i]=="and" or s[i]=="or":
+                if s[i]=="and":
                     separate=i
             if separate==-1:
                 temp=self.process_ingredients(ele.get_text())

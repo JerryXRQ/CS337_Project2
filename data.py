@@ -45,7 +45,8 @@ Liquid_Measurements=set(["Tbsp",
       "teaspoon",
       "teaspoons",
       "tsp",
-      "tsps"])
+      "tsps",
+      "scoops"])
 Solid_Measurements=set([
        "#",
       "#s",
@@ -230,6 +231,7 @@ descriptors= {
             "curdled",
             "cold",
             "cubes",
+            "dark",
             "decadent",
             "delactable",
             "dense",
@@ -258,7 +260,8 @@ descriptors= {
             "fried",
             "strips",
             "thinly",
-            "slices"
+            "slices",
+            "hard"
       ]),
       "seafood": set([
             "cooked",
@@ -387,6 +390,10 @@ descriptors= {
             "ripe",
             "very ripe",
             "flat-leaf"
+      ]),
+      "diary":set([
+            "skim",
+            "whole"
       ])
       }
 Method_Primary=set([
@@ -896,4 +903,17 @@ Chinese = \
             "mushroom":"shiitake mushroom",
             "mushrooms":"shiitake mushrooms"
       }
+}
+
+Lactose_Free={
+      "milk":"soy milk",
+      "butter":"coconut oil",
+      "cheese":"plant-based cheese",
+      "hard cheese":"tofu",
+      "ice cream":"sherbet",
+      "yogurt":"coconut milk yogurt",
+      "cream":"coconut milk",
+      "heavy cream":"coconut milk",
+      "whipping cream":"coconut milk",
+      "sour cream":"nondairy yogurt"
 }
