@@ -159,8 +159,9 @@ prep=set( [
       "thawed",
       "thawed",
       "torn",
-      "unsalted",
-      "patted"
+      "patted",
+      "quartered",
+      "trimmed"
     ])
 
 descriptors= {
@@ -178,7 +179,9 @@ descriptors= {
             "whole",
             "skin",
             "bone",
-            "breast"
+            "breast",
+            "neck",
+            "giblets"
       ]),
       "other": set([
             "finger-sized",
@@ -258,10 +261,12 @@ descriptors= {
             "folded",
             "fragrant",
             "fried",
+            "unsalted",
             "strips",
             "thinly",
             "slices",
-            "hard"
+            "hard",
+            "extra-virgin"
       ]),
       "seafood": set([
             "cooked",
@@ -269,6 +274,7 @@ descriptors= {
             "frozen"
       ]),
       "seasoning": set([
+            "seasoning",
             "active",
             "all purpose",
             "boiling",
@@ -400,6 +406,7 @@ Method_Primary=set([
       "bake",
       "boil",
       "broil",
+      "stir-fry",
       "fry",
       "pressure cook",
       "grill",
@@ -409,8 +416,14 @@ Method_Primary=set([
       "steam",
       "saute",
       "poach",
-      "deep fry"
+      "deep-fry"
     ])
+Tools_to_Method={
+      "air-fryer":"air-fry",
+      "fryer":"fry",
+      "wok":"stir-fry",
+      "pressure cooker":"pressure cook"
+}
 
 Method_Secondary=set([
       "arrange",
@@ -539,6 +552,7 @@ Tools=set([
     "dish",
     "dough scraper",
     "drum sieve",
+    "dutch oven",
     "edible tableware",
     "egg piercer",
     "egg poacher",
@@ -801,11 +815,11 @@ Vegan={
 }
 
 Make_Healthy={"approach":{
-      "fry":"air fry",
+      "fry":"air-fry",
       "grill":"broil"
       },
       "tools":{
-            "fryer":"air fryer",
+            "fryer":"air-fryer",
             "grill":"oven"
       }
       ,

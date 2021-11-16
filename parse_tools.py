@@ -6,7 +6,6 @@ import data
 import random
 from fractions import Fraction
 from math import floor
-import re
 
 class recipe():
     ingredients = {}
@@ -44,10 +43,14 @@ class recipe():
 
     def process_ingredients(self,ele):
         temp=ele.replace(",","")
-        temp=temp.replace("¼",".25")
-        temp=temp.replace("¾",".75")
-        temp=temp.replace("½",".5")
-        temp=temp.replace("⅓",".33")
+        temp=temp.replace(" ¼",".25")
+        temp = temp.replace("¼", ".25")
+        temp=temp.replace(" ¾",".75")
+        temp = temp.replace("¾", ".75")
+        temp=temp.replace(" ½",".5")
+        temp = temp.replace("½", ".5")
+        temp=temp.replace(" ⅓",".33")
+        temp = temp.replace("⅓", ".33")
         temp = temp.replace("- ", "")
         temp=temp.replace("-inch"," inch")
         temp=temp.replace(" or more","")
@@ -159,6 +162,7 @@ class recipe():
         name=name.replace("  "," ")
         name = name.replace(" or", "")
         name = name.replace(" and","")
+        name = name.replace("and ", "")
         name=name.replace(" as needed","")
         name = name.replace("as needed", "")
         name=name.replace(" to taste","")
@@ -178,6 +182,9 @@ class recipe():
         for ele in temp.split():
             if ele in data.Method_Primary:
                 counter[ele]+=1
+        for k in data.Tools_to_Method:
+            if k in temp:
+                counter[data.Tools_to_Method[k]]+=1
         return counter
 
 
@@ -239,9 +246,54 @@ class recipe():
             for ele in self.ingredients:
                 if ele in sentence and ele not in dic["ingredients"]:
                     dic["ingredients"].append(ele)
+                elif ele[-1]=="s" and ele[:len(ele)-1] in sentence and ele[:len(ele)-1] not in dic["ingredients"]:
+                    dic["ingredients"].append(ele)
+                else:
+                    for kw in ele.split():
+                        if kw in sentence and kw not in dic["ingredients"]:
+                            dic["ingredients"].append(kw)
             if len(dic["ingredients"])>0 or len(dic["methods"])>0 or len(dic["tools"])>0 or len(dic["time"])>0:
                 steps.append(dic)
         return steps
+
+    def process_methods_bs(self,res):
+        pm = defaultdict(int)
+        for ele in res:
+            s = self.process_methods_primary(ele.get_text())
+            for keys in s:
+                pm[keys] += s[keys]
+        self.primary_method = [k for k in pm.keys()]
+        self.primary_method.sort(key=lambda x: pm[x], reverse=True)
+        # Find Primary Method
+
+        sm = defaultdict(int)
+        for ele in res:
+            t = self.process_methods_secondary(ele.get_text())
+            for keys in t:
+                sm[keys] += t[keys]
+        self.secondary_method = [k for k in sm.keys()]
+        self.secondary_method.sort(key=lambda x: sm[x], reverse=True)
+        #Find Secondary Method
+
+    def process_methods(self,res):
+        pm = defaultdict(int)
+        for ele in res:
+            s = self.process_methods_primary(ele["raw"])
+            for keys in s:
+                pm[keys] += s[keys]
+        print(pm)
+        self.primary_method = [k for k in pm.keys()]
+        self.primary_method.sort(key=lambda x: pm[x], reverse=True)
+        # Find Primary Method
+
+        sm = defaultdict(int)
+        for ele in res:
+            t = self.process_methods_secondary(ele["raw"])
+            for keys in t:
+                sm[keys] += t[keys]
+        self.secondary_method = [k for k in sm.keys()]
+        self.secondary_method.sort(key=lambda x: sm[x], reverse=True)
+        #Find Secondary Method
 
 
     def to_Vegetarian(self):
@@ -295,6 +347,7 @@ class recipe():
                 elif ele in data.descriptors["meat"]:
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+
         return True
 
     def to_Vegan(self):
@@ -316,7 +369,7 @@ class recipe():
         for ele in self.ingredients.keys():
             for words in ele.split():
                 if words in data.Vegan:
-                    replace.append(words)
+                    replaced.append(words)
                     replacement.append(data.Vegan[words])
         if len(replaced) == 0:
             print("Sorry, we fail to find a replacement. This recipe is already vegan.")
@@ -481,6 +534,7 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
+        self.process_methods(self.steps)
         return True
 
     def to_Unhealthy(self):
@@ -550,6 +604,7 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
+        self.process_methods(self, self.steps)
         return True
 
 
@@ -693,6 +748,7 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
+        self.process_methods(self, self.steps)
         return True
 
     def lactose_free(self):
@@ -768,7 +824,7 @@ class recipe():
             s=ele.get_text().split()
             separate=-1
             for i in range(len(s)):
-                if s[i]=="and":
+                if s[i]=="and" and i>0 and s[i-1] not in data.prep:
                     separate=i
             if separate==-1:
                 temp=self.process_ingredients(ele.get_text())
@@ -784,24 +840,8 @@ class recipe():
         #Find Ingredients
 
         res = bs.find_all("li", attrs={"class": "subcontainer instructions-section-item"})
-        pm=defaultdict(int)
-        for ele in res:
-            s=self.process_methods_primary(ele.get_text())
-            for keys in s:
-                pm[keys]+=s[keys]
-        self.primary_method=[k for k in pm.keys()]
-        self.primary_method.sort(key=lambda x: pm[x],reverse=True)
-        #Find Primary Method
 
-
-        sm=defaultdict(int)
-        for ele in res:
-            t=self.process_methods_secondary(ele.get_text())
-            for keys in t:
-                sm[keys]+=t[keys]
-        self.secondary_method = [k for k in sm.keys()]
-        self.secondary_method.sort(key=lambda x: sm[x], reverse=True)
-
+        self.process_methods_bs(res)
         #Find Secondary Method
 
         for ele in res:
