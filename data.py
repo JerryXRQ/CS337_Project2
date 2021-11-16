@@ -391,7 +391,7 @@ descriptors= {
             "very ripe",
             "flat-leaf"
       ]),
-      "diary":set([
+      "dairy":set([
             "skim",
             "whole"
       ])
@@ -768,6 +768,37 @@ Vegetable=set([
       "chickpeas"
 ])
 #Intentionally ignored ingredients that serve as seasonings.
+Vegan={
+      "milk powder":"almond milk powder",
+      "milk":"soy milk",
+	  "mozzarella cheese": "vegan mozzarella cheese",
+      "mozzarella": "vegan mozzarella",
+      "parmesan cheese": "vegan parmesan cheese",
+      "cheese": "crumbled tofu",
+      "butter": "vegan margarine",
+      "yogurt": "almond milk yogurt",
+      "scrambled egg": "tofu scramble",
+      "egg whites":'tofu',
+      "egg white":"tofu",
+      "egg yolk": "tofu",
+      "egg": "tofu",
+      "yolk": "tofu",
+      "instant pudding": "dairy free instant pudding",
+      "pudding": "dairy free pudding",
+      "sour cream": "vegan sour cream",
+      "mayonnaise": "vegan mayonnaise",
+      "ketchup": "vegan ketchup",
+      "gelatin": "agar flakes",
+      "honey": "agave nectar",
+      "chocolate": "non-dairy chocolate",
+      "hollandaise sauce": "vegan hollandaise sauce",
+      "oyster sauce": "vegetarian oyster sauce",
+      "worcestershire sauce": "organic worcestershire sauce",
+      "bread": "wheat tortilla",
+      "bread toasts": "wheat tortilla",
+      "bagel": "vegan bagel",
+      "pancake": "vegan pancake"
+}
 
 Make_Healthy={"approach":{
       "fry":"air fry",
@@ -801,7 +832,16 @@ Make_Healthy={"approach":{
             "potatoes":"cauliflowers",
             "pork":"beef",
             "noodles":"zucchini noodles",
-            "potato chips":"popcorn"
+            "potato chips":"popcorn",
+            "ranch dressing":"balsamic vinegar",
+            "salami":"low-sodium ham",
+            "pickle":"cucumber",
+            "cheese":"low-fat cheese",
+            "margarine":"diet margarine",
+            "turkey bacon":"fresh turkey stripes",
+            "chocolate":"carob",
+            "beef":"extra-lean beef",
+            "soy sauce":"low-sodium soy sauce"
       }
 }
 

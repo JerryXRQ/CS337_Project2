@@ -297,6 +297,65 @@ class recipe():
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
         return True
 
+    def to_Vegan(self):
+        replaced = []
+        replacement = []
+        for ele in self.ingredients.keys():
+            meat = False
+            for words in ele.split():
+                if words in data.Non_Vegan["meat"]:
+                    meat = True
+                    break
+            if meat:
+                replaced.append(ele)
+                find = random.sample(data.Vegan_Protein, 1)
+                while find[0] in replacement and len(replacement) < len(data.Vegan_Protein):
+                    find = random.sample(data.Vegan_Protein, 1)
+                replacement.append(find[0])
+
+        for ele in self.ingredients.keys():
+            for words in ele.split():
+                if words in data.Vegan:
+                    replace.append(words)
+                    replacement.append(data.Vegan[words])
+        if len(replaced) == 0:
+            print("Sorry, we fail to find a replacement. This recipe is already vegan.")
+            return True
+        else:
+            print("We found the following items that need to be replaced: ", replaced)
+            print("We replaced them with: ", replacement)
+        for ele in range(len(replaced)):
+            dic={}
+            dic["name"]=replacement[ele]
+            dic["quantity"]=self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"]=self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = []
+            for w in self.ingredients[replaced[ele]]["descriptions"]:
+                if w not in data.descriptors["meat"] and w not in data.descriptors["dairy"]:
+                    dic["descriptions"].append(w)
+
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]]=dic
+
+        for i in range(len(self.steps)):
+            new_lis=[]
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis.append(replacement[replaced.index(ing)])
+                else:
+                    new_lis.append(ing)
+            self.steps[i]["ingredients"]=new_lis
+            sp = self.steps[i]["raw"].split()
+            for ele in sp:
+                if ele in replaced:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, replacement[replaced.index(ele)])
+                elif ele in data.descriptors["meat"] or ele in data.descriptors["dairy"]:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+        return True
+
 
     def to_Non_Vegetarian(self):
         replaced=[]
@@ -666,7 +725,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = []
             for w in self.ingredients[replaced[ele]]["descriptions"]:
-                if w not in data.descriptors["diary"]:
+                if w not in data.descriptors["dairy"]:
                     dic["descriptions"].append(w)
                 else:
                     des_rep.add(w)

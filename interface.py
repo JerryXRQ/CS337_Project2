@@ -35,7 +35,7 @@ def main():
             print("Something went wrong when retrieving information from the url.")
     det=True
     while det:
-        all_actions = ['vegetarian', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten free', 'chinese','lactose']
+        all_actions = ['vegetarian', 'vegan', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten free', 'chinese','lactose']
         print(f"Available actions: {all_actions}")
         action = input("What action do you want to perform: ")
         if action == "quit":
@@ -82,6 +82,10 @@ def main():
                 original.print_steps()
         elif action == "chinese":
             if original.chinese():
+                original.print_ingredients()
+                original.print_steps()
+        elif action == "vegan":
+            if original.to_Vegan():
                 original.print_ingredients()
                 original.print_steps()
     return
