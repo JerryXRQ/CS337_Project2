@@ -211,6 +211,7 @@ class recipe():
             sentence = sentence.replace(" 3/4", " .75")
             sentence = sentence.replace("3/4", ".75")
             sentence=sentence.replace(",","")
+            sentence=sentence.replace(";","")
             dic={}
             temp={}
             for st in ["   step 1   ","   step 2   ","   step 3   ","   step 4   ","   step 5   ","   step 6   ","   step 7   ","   step 8   ","   step 9   ","   step 10   "]:
@@ -252,6 +253,11 @@ class recipe():
                     for kw in ele.split():
                         if kw in sentence and kw not in dic["ingredients"]:
                             dic["ingredients"].append(kw)
+                        elif kw[-1]=="s" and kw[:len(kw)-1] in sentence:
+                            dic["ingredients"].append(kw)
+            for ele in data.Meat_Parts:
+                if ele in sentence and ele not in dic["ingredients"] and ele not in " ".join(dic["ingredients"]):
+                    dic["ingredients"].append(ele)
             if len(dic["ingredients"])>0 or len(dic["methods"])>0 or len(dic["tools"])>0 or len(dic["time"])>0:
                 steps.append(dic)
         return steps
@@ -299,6 +305,7 @@ class recipe():
     def to_Vegetarian(self):
         replaced=[]
         replacement=[]
+        match={}
         for ele in self.ingredients.keys():
             meat=False
             for words in ele.split():
@@ -311,6 +318,8 @@ class recipe():
                 while find[0] in replacement and len(replacement)<len(data.Vegan_Protein):
                     find=random.sample(data.Vegan_Protein,1)
                 replacement.append(find[0])
+                for sw in ele.split():
+                    match[sw]=find[0]
         if len(replaced) == 0:
             print("Sorry, we fail to find a replacement. This recipe is already vegetarian.")
             return True
@@ -333,26 +342,47 @@ class recipe():
             self.ingredients[replacement[ele]]=dic
 
         for i in range(len(self.steps)):
-            new_lis=[]
-            for ing in self.steps[i]["ingredients"]:
-                if ing in replaced:
-                    new_lis.append(replacement[replaced.index(ing)])
-                else:
-                    new_lis.append(ing)
-            self.steps[i]["ingredients"]=new_lis
+            new_lis = []
+            for ele in replaced:
+                if ele in self.steps[i]["raw"]:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, replacement[replaced.index(ele)])
+                elif ele[-1] == "s" and ele[:len(ele) - 1] in self.steps[i]["raw"]:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele[:len(ele) - 1],
+                                                                        replacement[replaced.index(ele)])
+
             sp = self.steps[i]["raw"].split()
             for ele in sp:
-                if ele in replaced:
-                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, replacement[replaced.index(ele)])
-                elif ele in data.descriptors["meat"]:
+                if ele in data.descriptors["meat"] or ele in data.descriptors["dairy"]:
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+                elif ele in data.Meat_Parts:
+                    chos = random.choice(replacement)
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, chos)
+                elif ele in match:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, match[ele])
+
+            sentence = self.steps[i]["raw"]
+            for ele in self.ingredients:
+                if ele in sentence and ele not in new_lis:
+                    new_lis.append(ele)
+                elif ele[-1] == "s" and ele[:len(ele) - 1] in sentence and ele[:len(ele) - 1] not in new_lis:
+                    new_lis.append(ele)
+                else:
+                    for kw in ele.split():
+                        if kw in sentence and kw not in new_lis:
+                            new_lis.append(kw)
+                        elif kw[-1] == "s" and kw[:len(kw) - 1] in sentence and kw not in new_lis:
+                            new_lis.append(kw)
+            self.steps[i]["ingredients"] = new_lis
 
         return True
 
     def to_Vegan(self):
         replaced = []
         replacement = []
+        replaced_m=[]
+        replacement_m=[]
+        match={}
         for ele in self.ingredients.keys():
             meat = False
             for words in ele.split():
@@ -361,10 +391,14 @@ class recipe():
                     break
             if meat:
                 replaced.append(ele)
+                replaced_m.append(ele)
                 find = random.sample(data.Vegan_Protein, 1)
                 while find[0] in replacement and len(replacement) < len(data.Vegan_Protein):
                     find = random.sample(data.Vegan_Protein, 1)
                 replacement.append(find[0])
+                replacement_m.append(find[0])
+                for sw in ele.split():
+                    match[sw]=find[0]
 
         for ele in self.ingredients.keys():
             for words in ele.split():
@@ -392,21 +426,41 @@ class recipe():
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]]=dic
 
+
         for i in range(len(self.steps)):
             new_lis=[]
-            for ing in self.steps[i]["ingredients"]:
-                if ing in replaced:
-                    new_lis.append(replacement[replaced.index(ing)])
-                else:
-                    new_lis.append(ing)
-            self.steps[i]["ingredients"]=new_lis
+            for ele in replaced:
+                if ele in self.steps[i]["raw"]:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, replacement[replaced.index(ele)])
+                elif ele[-1]=="s" and ele[:len(ele)-1] in self.steps[i]["raw"]:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele[:len(ele)-1], replacement[replaced.index(ele)])
+
             sp = self.steps[i]["raw"].split()
             for ele in sp:
-                if ele in replaced:
-                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, replacement[replaced.index(ele)])
-                elif ele in data.descriptors["meat"] or ele in data.descriptors["dairy"]:
+                if ele in data.descriptors["meat"] or ele in data.descriptors["dairy"]:
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+                elif ele in data.Meat_Parts:
+                    chos = random.choice(replacement_m)
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, chos)
+                elif ele in match:
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, match[ele])
+
+            sentence=self.steps[i]["raw"]
+            for ele in self.ingredients:
+                if ele in sentence and ele not in new_lis:
+                    new_lis.append(ele)
+                elif ele[-1] == "s" and ele[:len(ele) - 1] in sentence and ele[:len(ele) - 1] not in new_lis:
+                    new_lis.append(ele)
+                else:
+                    for kw in ele.split():
+                        if kw in sentence and kw not in new_lis:
+                            new_lis.append(kw)
+                        elif kw[-1] == "s" and kw[:len(kw) - 1] in sentence:
+                            new_lis.append(kw)
+            self.steps[i]["ingredients"]=new_lis
+
+
         return True
 
 

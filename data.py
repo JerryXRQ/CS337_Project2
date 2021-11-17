@@ -167,16 +167,13 @@ prep=set( [
 descriptors= {
       "meat": set([
             "boneless",
-            "hot",
             "instant",
             "lean",
             "lukewarm",
             "raw",
             "refrigerated",
             "skinless",
-            "tender",
             "halves",
-            "whole",
             "skin",
             "bone",
             "breast",
@@ -184,6 +181,7 @@ descriptors= {
             "giblets"
       ]),
       "other": set([
+            "whole",
             "finger-sized",
             "all-purpose",
             "a la carte",
@@ -971,3 +969,30 @@ Lactose_Free={
       "whipping cream":"coconut milk",
       "sour cream":"nondairy yogurt"
 }
+
+Meat_Parts=set([
+      "neck",
+      "chuck",
+      "shank",
+      "brisket",
+      "shank",
+      "rib",
+      "loin",
+      "rump",
+      "sirloin",
+      "flank",
+      "tail",
+      "thigh",
+      "thighs",
+      "wing",
+      "wings",
+      "drum stick",
+      "breast",
+      "breasts",
+      "head",
+      "belly",
+      "leg",
+      "legs",
+      "hock",
+      "totters"
+])
