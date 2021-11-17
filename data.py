@@ -161,7 +161,9 @@ prep=set( [
       "torn",
       "patted",
       "quartered",
-      "trimmed"
+      "trimmed",
+      "zested",
+      "juiced"
     ])
 
 descriptors= {

@@ -287,7 +287,7 @@ class recipe():
             s = self.process_methods_primary(ele["raw"])
             for keys in s:
                 pm[keys] += s[keys]
-        print(pm)
+        #print(pm)
         self.primary_method = [k for k in pm.keys()]
         self.primary_method.sort(key=lambda x: pm[x], reverse=True)
         # Find Primary Method
@@ -399,11 +399,10 @@ class recipe():
                 replacement_m.append(find[0])
                 for sw in ele.split():
                     match[sw]=find[0]
-
         for ele in self.ingredients.keys():
             for words in ele.split():
                 if words in data.Vegan:
-                    replaced.append(words)
+                    replaced.append(ele)
                     replacement.append(data.Vegan[words])
         if len(replaced) == 0:
             print("Sorry, we fail to find a replacement. This recipe is already vegan.")
@@ -439,7 +438,7 @@ class recipe():
             for ele in sp:
                 if ele in data.descriptors["meat"] or ele in data.descriptors["dairy"]:
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
-                    self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", "")
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", " ")
                 elif ele in data.Meat_Parts:
                     chos = random.choice(replacement_m)
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, chos)
