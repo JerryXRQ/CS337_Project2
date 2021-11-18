@@ -956,7 +956,17 @@ Chinese = \
             "ketchup":"hosin sauce",
             "cabbage":"bok choy",
             "mushroom":"shiitake mushroom",
-            "mushrooms":"shiitake mushrooms"
+            "mushrooms":"shiitake mushrooms",
+            "cinnamon":"chinese five spice",
+            "tomato sauce":"chilli bean sauce",
+            "red chilli sauce":"chilli bean sauce",
+            "mayonnaise":"chilli bean sauce",
+            "mayo":"chilli bean sauce",
+            "red wine":"shaoxing rice wine",
+            "vinegar":"white rice vinegar",
+            "pasta":"dried egg noodles",
+            "spaghetti":"dried egg noodles",
+            "noodles":"vermicelli noodles"
       }
 }
 
@@ -1009,6 +1019,31 @@ Lactose_Free={
       "whipping cream":"coconut milk",
       "sour cream":"nondairy yogurt"
 }
+
+Cook_Approach=set([
+      "bake",
+      "boil",
+      "broil",
+      "stir-fry",
+      "fry",
+      "pressure cook",
+      "grill",
+      "steam",
+      "saute",
+      "deep-fry"
+])
+
+Approach_Tools={
+      "oven",
+      "wok",
+      "fryer",
+      "pressure cooker",
+      "grill",
+      "steamer",
+      "fry pan",
+      "deep fryer"
+}
+
 
 Meat_Parts=set([
       "neck",

@@ -825,7 +825,7 @@ class recipe():
                     present["Tool Change: "].append([app, data.Mexican["tools"][app]])
                     det = True
         if not det:
-            print("Sorry, we cannot find any transformations. This particular recipe could not be made in Chinese style.")
+            print("Sorry, we cannot find any transformations. This particular recipe could not be made in Mexican style.")
             return False
         else:
             print("We found the following substitutions: ")
@@ -927,6 +927,49 @@ class recipe():
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", " ")
             self.steps[i]["ingredients"] = new_lis_ing
         return True
+
+    def to_stir_fry(self):
+        det=False
+        approach=[]
+        for s in self.steps:
+            for w in s["raw"].split():
+                if w in data.Cook_Approach and w!='stir-fry':
+                    det=True
+                    if w not in approach:
+                        approach.append(w)
+        if not det:
+            print("Sorry, we cannot find any cooking methods that can be transformed to stir-fry.")
+            return False
+        else:
+            print("We will transform the following method to stir-fry: ",approach)
+
+        if "olive oil" not in self.ingredients:
+            dic = {}
+            dic["name"] = "vegetable oil"
+            dic["quantity"] = 2.0
+            dic["unit"] = "teaspoon"
+            dic["prep"] = []
+            dic["descriptions"] = []
+            dic["additional"] = ["Add before stir fry"]
+            self.ingredients["vegetable oil"]=dic
+
+        for index in range(len(self.steps)):
+            for w in self.steps[index]["raw"].split():
+                if w in data.Cook_Approach:
+                    self.steps[index]["raw"]=self.steps[index]["raw"].replace(w,"stir fry")
+                if w in data.Approach_Tools:
+                    self.steps[index]["raw"] = self.steps[index]["raw"].replace(w, "wok")
+            new_t=[]
+            for t in self.steps[index]["tools"]:
+                if t in data.Approach_Tools:
+                    if "wok" not in new_t:
+                        new_t.append("wok")
+                else:
+                    new_t.append(t)
+            self.steps[index]["tools"]=new_t
+        return True
+
+
 
     def initialize(self,url):
         self.ingredients = {}
