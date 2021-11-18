@@ -104,7 +104,6 @@ class recipe():
                         unit=update[w]
                         name=" ".join(update[w+1:])
                         found=True
-                        break
                     except:
                         try:
                             q = float(Fraction(update[w - 1]))
@@ -115,6 +114,7 @@ class recipe():
                             found=False
                 elif w>0:
                     try:
+
                         q=float(update[w-1])
                         unit=update[w]
                         name = name.replace(update[w], "")
@@ -657,7 +657,7 @@ class recipe():
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
-        self.process_methods(self, self.steps)
+        self.process_methods(self.steps)
         return True
 
 
@@ -677,7 +677,7 @@ class recipe():
             change_pos=[]
             for pos in range(len(s)):
                 if len(self.steps[ele]["time"])>0 and s[pos] in self.steps[ele]["time"]["unit"]:
-                    print(s,ele)
+                    #print(s,ele)
                     try:
                         change_pos.append([pos-1,floor(float(s[pos-1])*ratio**0.5)])
                     except:
@@ -787,21 +787,90 @@ class recipe():
             self.steps[i]["ingredients"] = new_lis_ing
 
             for app in self.steps[i]["methods"]:
-                if app in data.Make_Unhealthy["approach"]:
-                    new_lis_app.append(data.Make_Unhealthy["approach"][app])
-                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Make_Unhealthy["approach"][app])
+                if app in data.Chinese["approach"]:
+                    new_lis_app.append(data.Chinese["approach"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Chinese["approach"][app])
                 else:
                     new_lis_app.append(app)
             self.steps[i]["methods"] = new_lis_app
 
             for app in self.steps[i]["tools"]:
-                if app in data.Make_Unhealthy["tools"]:
-                    new_lis_tools.append(data.Make_Unhealthy["tools"][app])
-                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Make_Unhealthy["tools"][app])
+                if app in data.Chinese["tools"]:
+                    new_lis_tools.append(data.Chinese["tools"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Chinese["tools"][app])
                 else:
                     new_lis_tools.append(app)
             self.steps[i]["tools"] = new_lis_tools
-        self.process_methods(self, self.steps)
+        self.process_methods(self.steps)
+        return True
+
+    def mexico(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        for ele in self.ingredients.keys():
+            if ele in data.Mexican["ingredients"]:
+                replaced.append(ele)
+                replacement.append(data.Mexican["ingredients"][ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+        for i in range(len(self.steps)):
+            for app in self.steps[i]["methods"]:
+                if app in data.Mexican["approach"]:
+                    present["Method Change: "].append([app, data.Mexican["approach"][app]])
+                    det = True
+            for app in self.steps[i]["tools"]:
+                if app in data.Mexican["tools"]:
+                    present["Tool Change: "].append([app, data.Mexican["tools"][app]])
+                    det = True
+        if not det:
+            print("Sorry, we cannot find any transformations. This particular recipe could not be made in Chinese style.")
+            return False
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
+
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            new_lis_app = []
+            new_lis_tools = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
+
+            for app in self.steps[i]["methods"]:
+                if app in data.Mexican["approach"]:
+                    new_lis_app.append(data.Mexican["approach"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Mexican["approach"][app])
+                else:
+                    new_lis_app.append(app)
+            self.steps[i]["methods"] = new_lis_app
+
+            for app in self.steps[i]["tools"]:
+                if app in data.Mexican["tools"]:
+                    new_lis_tools.append(data.Mexican["tools"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Mexican["tools"][app])
+                else:
+                    new_lis_tools.append(app)
+            self.steps[i]["tools"] = new_lis_tools
+        self.process_methods(self.steps)
         return True
 
     def lactose_free(self):

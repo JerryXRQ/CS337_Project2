@@ -266,7 +266,8 @@ descriptors= {
             "thinly",
             "slices",
             "hard",
-            "extra-virgin"
+            "extra-virgin",
+            "seedless"
       ]),
       "seafood": set([
             "cooked",
@@ -957,6 +958,43 @@ Chinese = \
             "mushroom":"shiitake mushroom",
             "mushrooms":"shiitake mushrooms"
       }
+}
+
+Mexican={
+      "approach":{
+            "bake":"steam",
+            "wok":"mexican wok",
+            "broil":"steam"
+      },
+      "tools":{
+            "oven":"steamer",
+            "spoon":"spatula"
+      },
+      "ingredients":{
+            "pasta":"pinto",
+            "spaghetti":"black beans",
+            "flour":"rice flour",
+            "potato":"avocado",
+            "potatoes":"avocado",
+            "basil":"cilantro",
+            "parsley":"cilantro",
+            "lemon":"lime",
+            "soy sauce":"vinegar",
+            "ketchup":"salsas",
+            "broccoli":"corn",
+            "cauliflower":"corn",
+            "hot pepper":"jalapenos",
+            "beef":"pork",
+            "steak":"pork",
+            "macaroni":"rice",
+            "lasagne":"rice",
+            "chiles":"guajillo chiles",
+            "cinnamon":"mexican cinnamon",
+            "chocolate":"mexican chocolate",
+            "butter":"lard",
+            "vegetable oil":"lard"
+      }
+
 }
 
 Lactose_Free={

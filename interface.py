@@ -37,7 +37,7 @@ def main():
             print("We have successfully parsed the recipe. Please use option verbose to see more details.")
     det=True
     while det:
-        all_actions = ['verbose',"methods",'vegetarian', 'vegan', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten free', 'chinese','lactose']
+        all_actions = ['verbose',"methods",'vegetarian', 'vegan', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten free', 'chinese',"mexican",'lactose']
         print(f"Available actions: {all_actions}")
         action = input("What action do you want to perform: ")
         if action == "quit":
@@ -107,6 +107,9 @@ def main():
                 print("If you want more details, please use the option verbose.")
                 # original.print_ingredients()
                 # original.print_steps()
+        elif action=="mexican":
+            if original.mexico():
+                print("If you want more details, please use the option verbose.")
     return
 
 
