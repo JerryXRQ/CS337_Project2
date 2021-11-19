@@ -986,7 +986,7 @@ class recipe():
         else:
             print("We will transform the following method to stir-fry: ",approach)
 
-        if "olive oil" not in self.ingredients:
+        if "vegetable oil" not in self.ingredients:
             dic = {}
             dic["name"] = "vegetable oil"
             dic["quantity"] = 2.0
@@ -1010,6 +1010,77 @@ class recipe():
                 else:
                     new_t.append(t)
             self.steps[index]["tools"]=new_t
+        return True
+
+    def to_deep_fry(self):
+        det=False
+        approach=[]
+        for s in self.steps:
+            for w in s["raw"].split():
+                if w in data.Cook_Approach and w!='deep-fry':
+                    det=True
+                    if w not in approach:
+                        approach.append(w)
+        if not det:
+            print("Sorry, we cannot find any cooking methods that can be transformed to stir-fry.")
+            return False
+        else:
+            print("We will transform the following method to deep-fry: ",approach)
+
+        if "vegetable oil" not in self.ingredients:
+            dic = {}
+            dic["name"] = "vegetable oil"
+            dic["quantity"] = 1
+            dic["unit"] = "Based on the size of fryer"
+            dic["prep"] = []
+            dic["descriptions"] = []
+            dic["additional"] = ["Add before deep-fry"]
+            self.ingredients["vegetable oil"]=dic
+        else:
+            dic = {}
+            dic["name"] = "frying vegetable oil"
+            dic["quantity"] = 1
+            dic["unit"] = "Based on the size of fryer"
+            dic["prep"] = []
+            dic["descriptions"] = []
+            dic["additional"] = ["Add before deep-fry"]
+            self.ingredients["frying vegetable oil"] = dic
+
+        if "flour" not in self.ingredients:
+            dic = {}
+            dic["name"] = "flour"
+            dic["quantity"] = 1
+            dic["unit"] = "Based on the size of fryer"
+            dic["prep"] = []
+            dic["descriptions"] = []
+            dic["additional"] = ["cover ingredients"]
+            self.ingredients["flour"]=dic
+        else:
+            self.ingredients["flour"]["quantity"]+=1.0
+
+
+        for index in range(len(self.steps)):
+            for w in self.steps[index]["raw"].split():
+                if w in data.Cook_Approach:
+                    self.steps[index]["raw"]=self.steps[index]["raw"].replace(w,"deep-fry")
+                if w in data.Approach_Tools:
+                    self.steps[index]["raw"] = self.steps[index]["raw"].replace(w, "deep-fryer")
+            new_t=[]
+            for t in self.steps[index]["tools"]:
+                if t in data.Approach_Tools:
+                    if "deep-fryer" not in new_t:
+                        new_t.append("deep-fryer")
+                else:
+                    new_t.append(t)
+            self.steps[index]["tools"]=new_t
+        new_step={
+            "raw":"cover main ingredients with flour",
+            "time":{},
+            "tools":[],
+            "methods":["cover"],
+            "ingredients":['flour']
+        }
+        self.steps=[new_step]+self.steps
         return True
 
 

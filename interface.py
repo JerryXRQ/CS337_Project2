@@ -37,14 +37,14 @@ def main():
             print("We have successfully parsed the recipe. Please use option verbose to see more details.")
     det=True
     while det:
-        all_actions = ['verbose',"methods",'vegetarian', 'vegan', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican",'lactose','stir-fry']
+        all_actions = ['verbose',"methods",'vegetarian', 'vegan', 'meat', 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican",'lactose','stir-fry','deep-fry']
         print("Available actions: ")
         print("Result Display: [verbose, methods]")
         print("Ingredients Requirements: [vegetarian, vegan, meat, gluten, lactose]")
         print("Health Related: [healthy, unhealthy]")
         print("Quantity Change: [double, half]")
         print("Style Change: [chinese, mexican]")
-        print("Cooking Method Change: [stir-fry]")
+        print("Cooking Method Change: [stir-fry, deep-fry]")
         print('\n')
         action = input("What action do you want to perform: ")
         if action == "quit":
@@ -119,6 +119,9 @@ def main():
                 print("If you want more details, please use the option verbose.")
         elif action=="stir-fry":
             if original.to_stir_fry():
+                print("If you want more details, please use the option verbose.")
+        elif action=='deep-fry':
+            if original.to_deep_fry():
                 print("If you want more details, please use the option verbose.")
     return
 
