@@ -51,6 +51,9 @@ class recipe():
         temp = temp.replace("½", ".5")
         temp=temp.replace(" ⅓",".33")
         temp = temp.replace("⅓", ".33")
+        temp = temp.replace("⅐",".143")
+        temp = temp.replace("⅜",".375")
+        temp = temp.replace("⅖",".4")
         temp = temp.replace("- ", "")
         temp=temp.replace("-inch"," inch")
         temp=temp.replace(" or more","")
@@ -338,8 +341,16 @@ class recipe():
                     dic["descriptions"].append(w)
 
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]]=dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    self.ingredients["replacement " + replacement[ele]] = dic
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
 
         for i in range(len(self.steps)):
             new_lis = []
@@ -422,8 +433,16 @@ class recipe():
                     dic["descriptions"].append(w)
 
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]]=dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    self.ingredients["replacement " + replacement[ele]] = dic
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
 
 
         for i in range(len(self.steps)):
@@ -497,8 +516,16 @@ class recipe():
                     dic["descriptions"].append(w)
 
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]]=dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    self.ingredients["replacement " + replacement[ele]] = dic
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
 
         for i in range(len(self.steps)):
             new_lis = []
@@ -555,8 +582,16 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]]=dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"]==dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"]+=dic["quantity"]
+                else:
+                    self.ingredients["replacement "+replacement[ele]] = dic
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]]=dic
 
         for i in range(len(self.steps)):
             new_lis_ing = []
@@ -626,8 +661,16 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]]=dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    self.ingredients["replacement " + replacement[ele]] = dic
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
 
         for i in range(len(self.steps)):
             new_lis_ing = []
@@ -993,7 +1036,19 @@ class recipe():
                     separate=i
             if separate==-1:
                 temp=self.process_ingredients(ele.get_text())
-                self.ingredients[temp['name']]=temp
+                if temp['name'] in self.ingredients and self.ingredients[temp['name']]["descriptions"]==temp["descriptions"] and self.ingredients[temp['name']]["unit"]==temp["unit"] and self.ingredients[temp['name']]["prep"]==temp["prep"]:
+                    self.ingredients[temp["name"]]["quantity"]+=temp["quantity"]
+                elif temp['name'] in self.ingredients and len(temp["prep"])>0 and self.ingredients[temp['name']]["prep"]!=temp["prep"]:
+                    temp['name']=temp['prep'][0]+" "+temp["name"]
+                    self.ingredients[temp['name']] = temp
+                elif temp['name'] in self.ingredients and len(temp["descriptions"])>0 and self.ingredients[temp['name']]["descriptions"]!=temp["descriptions"]:
+                    temp['name']=temp['descriptions'][0]+" "+temp["name"]
+                    self.ingredients[temp['name']] = temp
+                elif temp['name'] in self.ingredients:
+                    temp['name'] = temp["name"]+" for different purpose"
+                    self.ingredients[temp['name']] = temp
+                else:
+                    self.ingredients[temp['name']]=temp
             else:
                 temp = self.process_ingredients(" ".join(s[:separate]))
                 if temp:
