@@ -1078,6 +1078,15 @@ meat=set([
       "ham",
 ])
 
+volume_to_gram={
+      "tablespoon":14,
+      "teaspoon":4,
+      "teaspoons":4,
+      "tablespoons":14,
+      "cup":115,
+      "cups":115
+}
+
 shellfish={
       "clams":"oyster mushroom",
       "mussels":"oyster mushroom",

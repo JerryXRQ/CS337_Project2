@@ -783,6 +783,18 @@ class recipe():
                 s[pair[0]]=str(pair[1])
             self.steps[ele]["raw"]=" ".join(s)
 
+    def weight(self):
+        update = []
+        for ele in self.ingredients.keys():
+            #print(self.ingredients[ele]["unit_type"])
+            if self.ingredients[ele]["unit_type"] == "volumetric":
+                self.ingredients[ele]["quantity"] = float(self.ingredients[ele]["quantity"]) * data.volume_to_gram[self.ingredients[ele]["unit"]]
+                self.ingredients[ele]["unit_type"] = "weight"
+                self.ingredients[ele]["unit"] = "grams"
+                update.append(ele)
+                #print(self.ingredients[ele])
+        print("Replaced volumetric measurement with gram weights for ", update)
+
 
     def kosher(self):
         replaced = []
