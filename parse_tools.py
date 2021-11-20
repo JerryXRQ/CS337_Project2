@@ -54,6 +54,7 @@ class recipe():
         temp = temp.replace("⅐",".143")
         temp = temp.replace("⅜",".375")
         temp = temp.replace("⅖",".4")
+        temp = temp.replace("⅔",".66")
         temp = temp.replace("- ", "")
         temp=temp.replace("-inch"," inch")
         temp=temp.replace(" or more","")
@@ -346,7 +347,16 @@ class recipe():
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
                     self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
                 else:
-                    self.ingredients["replacement " + replacement[ele]] = dic
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
 
             else:
                 self.ingredients.pop(replaced[ele])
@@ -438,7 +448,16 @@ class recipe():
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
                     self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
                 else:
-                    self.ingredients["replacement " + replacement[ele]] = dic
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
 
             else:
                 self.ingredients.pop(replaced[ele])
@@ -521,7 +540,16 @@ class recipe():
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
                     self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
                 else:
-                    self.ingredients["replacement " + replacement[ele]] = dic
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
 
             else:
                 self.ingredients.pop(replaced[ele])
@@ -587,7 +615,16 @@ class recipe():
                 if self.ingredients[replacement[ele]]["unit"]==dic["unit"]:
                     self.ingredients[replacement[ele]]["quantity"]+=dic["quantity"]
                 else:
-                    self.ingredients["replacement "+replacement[ele]] = dic
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
 
             else:
                 self.ingredients.pop(replaced[ele])
@@ -666,7 +703,16 @@ class recipe():
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
                     self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
                 else:
-                    self.ingredients["replacement " + replacement[ele]] = dic
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
 
             else:
                 self.ingredients.pop(replaced[ele])
@@ -763,8 +809,25 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]] = dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
 
         for i in range(len(self.steps)):
             new_lis_ing = []
@@ -951,8 +1014,25 @@ class recipe():
                 else:
                     des_rep.add(w)
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
-            self.ingredients.pop(replaced[ele])
-            self.ingredients[replacement[ele]] = dic
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
 
         for i in range(len(self.steps)):
             new_lis_ing = []
