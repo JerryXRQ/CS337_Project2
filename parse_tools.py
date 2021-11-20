@@ -796,10 +796,15 @@ class recipe():
                 replacement.append(data.Kosher[ele])
                 present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
                 det = True
+            if ele in data.shellfish:
+                replaced.append(ele)
+                replacement.append(data.shellfish[ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
             for i in ele.split(" "):
                 if ele in data.meat:
                     meat += 1
-        print(meat)
+        
         if meat != 0:
             for ele in self.ingredients.keys():
                 print(ele)

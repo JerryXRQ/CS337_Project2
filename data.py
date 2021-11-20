@@ -1078,6 +1078,18 @@ meat=set([
       "ham",
 ])
 
+shellfish={
+      "clams":"oyster mushroom",
+      "mussels":"oyster mushroom",
+      "oysters":"oyster mushroom",
+      "scallops":"oyster mushroom",
+      "shrimp":"oyster mushroom",
+      "lobster":"oyster mushroom",
+      "crayfish":"oyster mushroom",
+      "crab":"oyster mushroom",
+      "clams":"oyster mushroom"
+}
+
 Kosher={
       "pork":"beef",
       "sausage":"beef sausage",
