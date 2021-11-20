@@ -26,13 +26,13 @@ def main():
         if not re.search('allrecipes.com', dish):
             print("Input should be a link from allrecipes.com. Please try again.")
             continue
-        #try:
-        original = parse_tools.recipe(dish)
-        #original.print_ingredients()
-        #original.print_steps()
-        urlin=False
-        #except:
-        print("Something went wrong when retrieving information from the url.")
+        try:
+            original = parse_tools.recipe(dish)
+            #original.print_ingredients()
+            #original.print_steps()
+            urlin=False
+        except:
+            print("Something went wrong when retrieving information from the url.")
         if not urlin:
             print("We have successfully parsed the recipe. Please use option verbose to see more details.")
     det=True
