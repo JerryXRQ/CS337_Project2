@@ -440,6 +440,7 @@ class recipe():
             dic["unit"]=self.ingredients[replaced[ele]]["unit"]
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = []
+            #print(self.ingredients[replaced[ele]])
             for w in self.ingredients[replaced[ele]]["descriptions"]:
                 if w not in data.descriptors["meat"] and w not in data.descriptors["dairy"]:
                     dic["descriptions"].append(w)
@@ -782,6 +783,81 @@ class recipe():
                 s[pair[0]]=str(pair[1])
             self.steps[ele]["raw"]=" ".join(s)
 
+
+    def kosher(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        meat = 0
+        for ele in self.ingredients.keys():
+            if ele in data.Kosher:
+                replaced.append(ele)
+                replacement.append(data.Kosher[ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+            for i in ele.split(" "):
+                if ele in data.meat:
+                    meat += 1
+        print(meat)
+        if meat != 0:
+            for ele in self.ingredients.keys():
+                print(ele)
+                for i in ele.split(" "):
+                    if i in data.Lactose_Free.keys():
+                        print(i)
+                        det=True
+                        replaced.append(ele)
+                        replacement.append(data.Lactose_Free[i])
+                        present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+
+         
+        if not det:
+            print("Sorry, we cannot find any transformation. This recipe is already kosher")
+            return False
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
+
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            if replacement[ele] in self.ingredients:
+                self.ingredients.pop(replaced[ele])
+                if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
+                    self.ingredients[replacement[ele]]["quantity"] += dic["quantity"]
+                else:
+                    u = []
+                    q = []
+                    u.append(self.ingredients[replacement[ele]]["unit"])
+                    u.append(dic["unit"])
+                    q.append(self.ingredients[replacement[ele]]["quantity"])
+                    q.append(dic["quantity"])
+                    self.ingredients[replacement[ele]]["quantity"] = q
+                    self.ingredients[replacement[ele]]["unit"] = u
+                    self.ingredients[replacement[ele]]["descriptions"] += dic["descriptions"]
+                    self.ingredients[replacement[ele]]["prep"] += dic["prep"]
+
+            else:
+                self.ingredients.pop(replaced[ele])
+                self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
+        return True
 
     def gluten_free(self):
         replaced = []
@@ -1267,9 +1343,10 @@ class recipe():
             dic["name"] = new_ing
             dic["quantity"] = quantity
             dic["prep"] = prep
-            dic["description"] = description
+            dic["descriptions"] = description
             dic["unit"] = unit
             dic["unit_type"] = unit_type
+            dic["additional"] = []
             ingredients_dic[new_ing] = dic
         return ingredients_dic
 
@@ -1324,7 +1401,7 @@ class recipe():
         #         temp = self.process_ingredients(" ".join(s[separate+1:]))
         #         if temp and len(temp['name'])>3:
         #             self.ingredients[temp['name']] = temp
-        #print(self.ingredients)
+        # print(self.ingredients)
 
         print("Ingredients Parsing Finished")
         #Find Ingredients

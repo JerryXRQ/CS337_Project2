@@ -1059,6 +1059,31 @@ Make_Unhealthy={"approach":{
       }
 }
 
+meat=set([
+      "beef",
+      "pork",
+      "lamb",
+      "chicken",
+      "duck",
+      "turkey",
+      "rib",
+      "sausage",
+      "sirloin",
+      "brisket",
+      "bacon",
+      "bison",
+      "goose",
+      "mutton",
+      "venison",
+      "ham",
+])
+
+Kosher={
+      "pork":"beef",
+      "sausage":"beef sausage",
+      "lard":"tallow"
+}
+
 Gluten_Free={
       "farro":"rice",
       "barley":"quinoa",
