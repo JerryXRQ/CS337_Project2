@@ -6,6 +6,7 @@ import data
 import random
 from fractions import Fraction
 from math import floor
+import re
 
 class recipe():
     ingredients = {}
@@ -42,6 +43,7 @@ class recipe():
 
 
     def process_ingredients(self,ele):
+        #print(ele)
         temp=ele.replace(",","")
         temp=temp.replace(" ¼",".25")
         temp = temp.replace("¼", ".25")
@@ -92,7 +94,7 @@ class recipe():
                 desc+=words[e][:len(words[e])-1]
             e+=1
         update=temp.split()
-
+        #print(update)
         found=False
         if update[0][0] in set([".", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]) and update[1] not in data.Liquid_Measurements and update[1] not in data.Solid_Measurements:
             quantity = float(words[0])
@@ -916,6 +918,75 @@ class recipe():
         self.process_methods(self.steps)
         return True
 
+    def cajun(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        for ele in self.ingredients.keys():
+            if ele in data.Cajun["ingredients"]:
+                replaced.append(ele)
+                replacement.append(data.Cajun["ingredients"][ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+        for i in range(len(self.steps)):
+            for app in self.steps[i]["methods"]:
+                if app in data.Cajun["approach"]:
+                    present["Method Change: "].append([app, data.Cajun["approach"][app]])
+                    det = True
+            for app in self.steps[i]["tools"]:
+                if app in data.Cajun["tools"]:
+                    present["Tool Change: "].append([app, data.Cajun["tools"][app]])
+                    det = True
+        if not det:
+            print("Sorry, we cannot find any transformations. This particular recipe could not be made in Cajun style.")
+            return False
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
+
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            new_lis_app = []
+            new_lis_tools = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
+
+            for app in self.steps[i]["methods"]:
+                if app in data.Cajun["approach"]:
+                    new_lis_app.append(data.Cajun["approach"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Cajun["approach"][app])
+                else:
+                    new_lis_app.append(app)
+            self.steps[i]["methods"] = new_lis_app
+
+            for app in self.steps[i]["tools"]:
+                if app in data.Cajun["tools"]:
+                    new_lis_tools.append(data.Cajun["tools"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Cajun["tools"][app])
+                else:
+                    new_lis_tools.append(app)
+            self.steps[i]["tools"] = new_lis_tools
+        self.process_methods(self.steps)
+        return True
+
     def lactose_free(self):
         replaced = []
         replacement = []
@@ -1083,6 +1154,44 @@ class recipe():
         self.steps=[new_step]+self.steps
         return True
 
+    def new_ingredient_processor(self, soupy):
+        ingredients_list = soupy.find_all(id=re.compile("^recipe-ingredients-label"))
+        ingredients_dic = {}
+        for i in ingredients_list:
+            unit = i.attrs["data-unit"]
+            if unit == "":
+                unit = "unit"
+            unit_type = i.attrs["data-unit_family"]
+            if unit_type == "":
+                unit_type = "each"
+            
+            quantity = i.attrs["data-init-quantity"]
+            ingredient = i.attrs["data-ingredient"]
+            split_ing = re.split("\s|,", ingredient)
+            prep = []
+            new_ing = []
+            description = []
+            for j in split_ing:
+                if j in data.prep:
+                    prep.append(j)
+                elif j in data.descriptors_non_nation:
+                    description.append(j)
+                elif j not in ["to", "or", "taste"]:
+                    new_ing.append(j)
+                    
+            new_ing = " ".join(new_ing)
+            prep = " & ".join(prep)
+            description = " ".join(description)
+            ing_val = i.attrs["value"]
+            dic={}
+            dic["name"] = new_ing
+            dic["quantity"] = quantity
+            dic["prep"] = prep
+            dic["description"] = description
+            dic["unit"] = unit
+            dic["unit_type"] = unit_type
+            ingredients_dic[new_ing] = dic
+        return ingredients_dic
 
 
     def initialize(self,url):
@@ -1096,37 +1205,47 @@ class recipe():
         html = requests.get(dish)
 
         bs=BeautifulSoup(html.content, features="html.parser")
+        #print(bs)
+        
+        #new simplified ingredient parser
+        self.ingredients = self.new_ingredient_processor(bs)
 
-        res=bs.find_all("span",attrs={"class": "ingredients-item-name"})
-        for ele in res:
-            #print(ele.get_text())
-            s=ele.get_text().split()
-            separate=-1
-            for i in range(len(s)):
-                if s[i]=="and" and i>0 and s[i-1] not in data.prep:
-                    separate=i
-            if separate==-1:
-                temp=self.process_ingredients(ele.get_text())
-                if temp['name'] in self.ingredients and self.ingredients[temp['name']]["descriptions"]==temp["descriptions"] and self.ingredients[temp['name']]["unit"]==temp["unit"] and self.ingredients[temp['name']]["prep"]==temp["prep"]:
-                    self.ingredients[temp["name"]]["quantity"]+=temp["quantity"]
-                elif temp['name'] in self.ingredients and len(temp["prep"])>0 and self.ingredients[temp['name']]["prep"]!=temp["prep"]:
-                    temp['name']=temp['prep'][0]+" "+temp["name"]
-                    self.ingredients[temp['name']] = temp
-                elif temp['name'] in self.ingredients and len(temp["descriptions"])>0 and self.ingredients[temp['name']]["descriptions"]!=temp["descriptions"]:
-                    temp['name']=temp['descriptions'][0]+" "+temp["name"]
-                    self.ingredients[temp['name']] = temp
-                elif temp['name'] in self.ingredients:
-                    temp['name'] = temp["name"]+" for different purpose"
-                    self.ingredients[temp['name']] = temp
-                else:
-                    self.ingredients[temp['name']]=temp
-            else:
-                temp = self.process_ingredients(" ".join(s[:separate]))
-                if temp:
-                    self.ingredients[temp['name']] = temp
-                temp = self.process_ingredients(" ".join(s[separate+1:]))
-                if temp and len(temp['name'])>3:
-                    self.ingredients[temp['name']] = temp
+
+        ### original ingredients processing
+        # res=bs.find_all("span",attrs={"class": "ingredients-item-name"})
+        # for ele in res:
+        #     #print(ele.get_text())
+        #     s=ele.get_text().split()
+        #     separate=-1
+        #     for i in range(len(s)):
+        #         if s[i]=="and" and i>0 and s[i-1] not in data.prep:
+        #             separate=i
+        #     if separate==-1:
+        #         #print(ele.get_text())
+        #         temp=self.process_ingredients(ele.get_text())
+        #         #print (temp)
+        #         if temp['name'] in self.ingredients and self.ingredients[temp['name']]["descriptions"]==temp["descriptions"] and self.ingredients[temp['name']]["unit"]==temp["unit"] and self.ingredients[temp['name']]["prep"]==temp["prep"]:
+        #             self.ingredients[temp["name"]]["quantity"]+=temp["quantity"]
+        #         elif temp['name'] in self.ingredients and len(temp["prep"])>0 and self.ingredients[temp['name']]["prep"]!=temp["prep"]:
+        #             temp['name']=temp['prep'][0]+" "+temp["name"]
+        #             self.ingredients[temp['name']] = temp
+        #         elif temp['name'] in self.ingredients and len(temp["descriptions"])>0 and self.ingredients[temp['name']]["descriptions"]!=temp["descriptions"]:
+        #             temp['name']=temp['descriptions'][0]+" "+temp["name"]
+        #             self.ingredients[temp['name']] = temp
+        #         elif temp['name'] in self.ingredients:
+        #             temp['name'] = temp["name"]+" for different purpose"
+        #             self.ingredients[temp['name']] = temp
+        #         else:
+        #             self.ingredients[temp['name']]=temp
+        #     else:
+        #         temp = self.process_ingredients(" ".join(s[:separate]))
+        #         if temp:
+        #             self.ingredients[temp['name']] = temp
+        #         temp = self.process_ingredients(" ".join(s[separate+1:]))
+        #         if temp and len(temp['name'])>3:
+        #             self.ingredients[temp['name']] = temp
+        #print(self.ingredients)
+
         print("Ingredients Parsing Finished")
         #Find Ingredients
 

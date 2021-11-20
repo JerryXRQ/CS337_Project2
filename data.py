@@ -98,8 +98,12 @@ Solid_Measurements=set([
 ])
 prep=set( [
       "al dente",
+      "allumette",
       "battered",
+      "baton",
+      "batonnet",
       "beaten",
+      "bias",
       "blackened",
       "blanched",
       "blended",
@@ -109,10 +113,13 @@ prep=set( [
       "brewed",
       "broiled",
       "browned",
+      "brunoise",
       "caked",
-      "canned",
+      "chopped",
+      #"canned",
       "charred",
       "chilled",
+      "chiffonade"
       "chopped",
       "cored",
       "creamed",
@@ -124,23 +131,28 @@ prep=set( [
       "cut",
       "deglazed",
       "dehydrated",
+      "debone",
+      "deboned",
       "devein",
       "deviled",
       "diced",
+      "dice",
       "divided",
       "drained",
-      "dried",
+      #"dried",
       "escalloped",
       "evaporated",
       "fermented",
       "flambé",
       "fricassed",
       "grated",
+      "ground",
       "halved",
       "julienned",
       "mashed",
       "melted",
       "minced",
+      "mince",
       "peeled",
       "pitted",
       "removed",
@@ -148,6 +160,7 @@ prep=set( [
       "rinsed",
       "roasted",
       "rubbed",
+      "reduced",
       "seasoned",
       "seeded",
       "separated",
@@ -173,6 +186,7 @@ descriptors= {
             "lean",
             "lukewarm",
             "raw",
+            "marbled",
             "refrigerated",
             "skinless",
             "halves",
@@ -403,10 +417,155 @@ descriptors= {
             "whole"
       ])
       }
+
+
+descriptors_non_nation=set([
+      "boneless",
+      "instant",
+      "lean",
+      "lukewarm",
+      "raw",
+      "marbled",
+      "refrigerated",
+      "skinless",
+      "halves",
+      "skin",
+      "bone",
+      "breast",
+      "neck",
+      "giblets"
+
+      "whole",
+      "finger-sized",
+      "all-purpose",
+      "a la carte",
+      "a la king",
+      "a la mode",
+      "acid",
+      "acidic",
+      "acrid",
+      "airy",
+      "alcoholic",
+      "ambrosial",
+      "aromatic",
+      "au fromage",
+      "au gratin",
+      "au jus",
+      "balsamic",
+      "bite size",
+      "bitter",
+      "blah",
+      "bland",
+      "bold",
+      "bolognese",
+      "brackish",
+      "briny",
+      "brittle",
+      "bubbly",
+      "burning",
+      "bursting",
+      "buttery",
+      "béarnaise",
+      "cacciatore",
+      "cakey",
+      "candied",
+      "carmelized",
+      "caustic",
+      "chalky",
+      "charcuterie",
+      "cheesy",
+      "chewy",
+      "chipotle",
+      "chocolately",
+      "classical",
+      "crispy",
+      "crumbly",
+      "crunchy",
+      "crusty",
+      "crystalized",
+      "curdled",
+      "cold",
+      "cubes",
+      "dark",
+      "decadent",
+      "delactable",
+      "dense",
+      "diluted",
+      "distinctive",
+      "doughy",
+      "dredged",
+      "dried out",
+      "dry",
+      "earthy",
+      "fatty",
+      "feathery",
+      "fibrous",
+      "fiery",
+      "finely",
+      "filled",
+      "filling",
+      "finger licking good",
+      "fishy",
+      "fizzy",
+      "flakey",
+      "floury",
+      "fluffy",
+      "folded",
+      "fragrant",
+      "fried",
+      "unsalted",
+      "strips",
+      "thinly",
+      "slices",
+      "hard",
+      "extra-virgin",
+      "seedless"
+
+      "cooked",
+      "freshly",
+      "frozen"
+
+      "seasoning",
+      "active",
+      "all purpose",
+      "boiling",
+      "distilled",
+      "dry",
+      "extra firm",
+      "extra virgin",
+      "frying",
+      "ground",
+      "hickory flavored",
+      "low sodium",
+      "non dairy",
+      "nonfat",
+      "reduced sodium",
+      "room temperature",
+      "superfine",
+      "sweetened",
+      "unsweetened",
+      "black"
+
+      "condensed",
+      "fresh",
+      "large",
+      "organic",
+      "packed",
+      "ripe",
+      "very ripe",
+      "flat-leaf"
+
+      "skim",
+      "whole"
+])
+      
+
 Method_Primary=set([
       "bake",
       "boil",
       "broil",
+      "blanch",
+      "microwave",
       "stir-fry",
       "fry",
       "pressure cook",
@@ -414,10 +573,12 @@ Method_Primary=set([
       "mix",
       "simmer",
       "blend",
+      "sear",
       "steam",
       "saute",
       "poach",
-      "deep-fry"
+      "deep-fry",
+      "shallow-fry"
     ])
 Tools_to_Method={
       "air-fryer":"air-fry",
@@ -461,6 +622,7 @@ Method_Secondary=set([
       "pound",
       "layer",
       "stuff",
+      "knead",
       "refrigerate",
       "rinse",
       "saute",
@@ -923,6 +1085,8 @@ Gluten_Free={
 Chinese = \
       {"approach":{
             "fry":"stir-fry",
+            "saute":"stir-fry",
+            "sear":"stir-fry",
             "soak":"boil",
             "immerse":"braise",
             "bath":"braise",
@@ -940,7 +1104,8 @@ Chinese = \
       "ingredients":{
             "chili":"dried chili",
             "hot pepper":"chili powder",
-            "pepper":"sichuan peppercorns",
+            #"pepper":"sichuan peppercorns",
+            "pepper":"white pepper",
             "spice":"five spice powder",
             "parsley":"bay leaf",
             "coriander":"bay leaf",
@@ -948,13 +1113,13 @@ Chinese = \
             "salt":"soy sauce",
             "lemon":"vinegar",
             "olive oil": "sesame oil",
-            "vegetable oil":"sesame oil",
             "butter":"sesame oil",
             "starch":"cornstarch",
             "bbq sauce":"oyster sauce",
             "tomato sauce":"hoisin sauce",
             "ketchup":"hosin sauce",
-            "cabbage":"bok choy",
+            #"cabbage":"bok choy",
+            "cabbage":"napa cabbage",
             "mushroom":"shiitake mushroom",
             "mushrooms":"shiitake mushrooms",
             "cinnamon":"chinese five spice",
@@ -966,15 +1131,57 @@ Chinese = \
             "vinegar":"white rice vinegar",
             "pasta":"dried egg noodles",
             "spaghetti":"dried egg noodles",
-            "noodles":"vermicelli noodles"
+            #"noodles":"vermicelli noodles"
       }
 }
 
+Cajun=\
+{
+      "approach":
+      {
+            "stir-fry":"saute",
+            "steam":"smoke",
+
+      },
+      "tools":{
+            "chopsticks":"fork",
+            "steamer":"smoker"
+      },
+      "ingredients":
+      {
+            "miripoix":"holy trinity",
+            "soffrito":"holy trinity",
+            "carrot":"bell pepper",
+            "roux":"dark roux",
+            "shallot":"green onion",
+            "chili":'cayenne',
+            "sausage":"andouille",
+            "chorizo":"boudin",
+            "pork":"boar",
+            "pork belly":"salt pork",
+            "stew":"gumbo",
+            "rice":"dirty rice"
+      }
+
+}
+
+German=\
+{
+      "ingredients":
+      {
+            "sour cream":"schmandt",
+            "beef":"veal",
+            "fennel":"caraway"
+      }
+}
+
+
 Mexican={
       "approach":{
-            "bake":"steam",
-            "wok":"mexican wok",
-            "broil":"steam"
+            "bake":"roast",
+            "wok":"plancha",
+            "griddle":"plancha",
+            "broil":"roast"
       },
       "tools":{
             "oven":"steamer",
@@ -995,6 +1202,7 @@ Mexican={
             "cauliflower":"corn",
             "hot pepper":"jalapenos",
             "beef":"pork",
+            "miripoix":"soffrito",
             "steak":"pork",
             "macaroni":"rice",
             "lasagne":"rice",
@@ -1004,7 +1212,6 @@ Mexican={
             "butter":"lard",
             "vegetable oil":"lard"
       }
-
 }
 
 Lactose_Free={
@@ -1041,6 +1248,11 @@ Approach_Tools={
       "grill",
       "steamer",
       "fry pan",
+      "sauce pan",
+      "stock pot",
+      "skillet",
+      "griddle",
+      "plancha",
       "deep fryer"
 }
 
@@ -1061,6 +1273,8 @@ Meat_Parts=set([
       "thighs",
       "wing",
       "wings",
+      "tender",
+      "tenderloin",
       "drum stick",
       "breast",
       "breasts",

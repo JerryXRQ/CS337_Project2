@@ -28,8 +28,8 @@ def main():
             continue
         #try:
         original = parse_tools.recipe(dish)
-            #original.print_ingredients()
-            #original.print_steps()
+        #original.print_ingredients()
+        #original.print_steps()
         urlin=False
         #except:
         print("Something went wrong when retrieving information from the url.")
@@ -43,7 +43,7 @@ def main():
         print("Ingredients Requirements: [vegetarian, vegan, meat, gluten, lactose]")
         print("Health Related: [healthy, unhealthy]")
         print("Quantity Change: [double, half]")
-        print("Style Change: [chinese, mexican]")
+        print("Style Change: [chinese, mexican, cajun]")
         print("Cooking Method Change: [stir-fry, deep-fry]")
         print('\n')
         action = input("What action do you want to perform: ")
@@ -116,6 +116,9 @@ def main():
                 # original.print_steps()
         elif action=="mexican":
             if original.mexico():
+                print("If you want more details, please use the option verbose.")
+        elif action=="cajun":
+            if original.cajun():
                 print("If you want more details, please use the option verbose.")
         elif action=="stir-fry":
             if original.to_stir_fry():
