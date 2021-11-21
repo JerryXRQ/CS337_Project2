@@ -761,7 +761,11 @@ class recipe():
 
     def scale(self,ratio):
         for ele in self.ingredients.keys():
-            self.ingredients[ele]["quantity"]*=ratio
+            if isinstance(self.ingredients[ele]["quantity"], int) or isinstance(self.ingredients[ele]["quantity"], float):
+                self.ingredients[ele]["quantity"]*=ratio
+            else:
+                for val in range(len(self.ingredients[ele]["quantity"])):
+                    self.ingredients[ele]["quantity"][val]*=2
 
         for ele in range(len(self.steps)):
             if len(self.steps[ele]["time"])==2:
@@ -778,6 +782,8 @@ class recipe():
                     #print(s,ele)
                     try:
                         change_pos.append([pos-1,floor(float(s[pos-1])*ratio**0.5)])
+                        if pos>=3 and s[pos-2]=="to":
+                            change_pos.append([pos-3,floor(float(s[pos-3])*ratio**0.5)])
                     except:
                         continue
                 elif s[pos] in data.Liquid_Measurements or s[pos] in data.Solid_Measurements:
@@ -1413,7 +1419,10 @@ class recipe():
             new_ing_name=new_ing_name.replace(" -","")
 
             dic["name"] = new_ing_name
-            dic["quantity"] = float(quantity)
+            try:
+                dic["quantity"] = float(quantity)
+            except:
+                dic["quantity"] = 0
             dic["prep"] = prep
             dic["descriptions"] = description
             dic["unit"] = unit

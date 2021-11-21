@@ -1,0 +1,199 @@
+We have tested our code using the following recipes
+
+https://www.allrecipes.com/recipe/12504/brown-familys-favorite-pumpkin-pie/
+
+Name:  pumpkin puree
+Quantity:  1.0
+Unit:  (15 ounce) can
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  condensed milk
+Quantity:  1.0
+Unit:  (14 ounce) can
+Preparation:  []
+Descriptions:  ['sweetened']
+Additional Instruction:  []
+
+
+Name:  egg yolks
+Quantity:  2.0
+Unit:  unit
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  cinnamon
+Quantity:  2.0
+Unit:  teaspoon
+Preparation:  ['ground']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  ginger
+Quantity:  0.5
+Unit:  teaspoon
+Preparation:  ['ground']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  nutmeg
+Quantity:  0.5
+Unit:  teaspoon
+Preparation:  ['ground']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  salt
+Quantity:  0.5
+Unit:  teaspoon
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  egg whites
+Quantity:  2.0
+Unit:  unit
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  unbaked pie shell
+Quantity:  1.0
+Unit:  (9 inch)
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  flour
+Quantity:  2.0
+Unit:  tablespoons
+Preparation:  []
+Descriptions:  ['all-purpose']
+Additional Instruction:  []
+
+
+Name:  brown sugar
+Quantity:  0.25
+Unit:  cup
+Preparation:  []
+Descriptions:  ['packed']
+Additional Instruction:  []
+
+
+Name:  butter
+Quantity:  2.0
+Unit:  tablespoons
+Preparation:  ['chilled']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  walnuts
+Quantity:  1.0
+Unit:  cup
+Preparation:  ['chopped']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Step  1 raw :   preheat the oven to 425 degrees f (220 degrees c)
+Step  1 time :  {}
+Step  1 tools :  ['oven']
+Step  1 methods :  ['heat', 'preheat']
+Step  1 ingredients :  []
+
+
+Step  2 raw :   in a large bowl mix together the pumpkin sweetened condensed milk and egg yolks
+Step  2 time :  {}
+Step  2 tools :  ['bowl']
+Step  2 methods :  ['mix']
+Step  2 ingredients :  ['pumpkin', 'condensed milk', 'egg yolks', 'egg']
+
+
+Step  3 raw :   stir in 1 teaspoon cinnamon ginger nutmeg and salt
+Step  3 time :  {}
+Step  3 tools :  ['teaspoon']
+Step  3 methods :  ['stir', 'spoon']
+Step  3 ingredients :  ['cinnamon', 'ginger', 'nutmeg', 'salt']
+
+
+Step  4 raw :   in a large glass or metal bowl whip egg whites until soft peaks form
+Step  4 time :  {}
+Step  4 tools :  ['bowl']
+Step  4 methods :  []
+Step  4 ingredients :  ['egg', 'egg whites']
+
+
+Step  5 raw :   gently fold into pumpkin mixture
+Step  5 time :  {}
+Step  5 tools :  []
+Step  5 methods :  ['mix', 'fold']
+Step  5 ingredients :  ['pumpkin']
+
+
+Step  6 raw :   pour filling into pie shell
+Step  6 time :  {}
+Step  6 tools :  []
+Step  6 methods :  ['pour']
+Step  6 ingredients :  ['pie', 'shell']
+
+
+Step  7 raw :   bake for 15 minutes in the preheated oven
+Step  7 time :  {'unit': 'minutes', 'quantity': 15.0}
+Step  7 tools :  ['oven']
+Step  7 methods :  ['bake', 'heat', 'preheat']
+Step  7 ingredients :  []
+
+
+Step  8 raw :   while the pie is baking prepare the streusel topping: in a small bowl combine the flour brown sugar and 1 teaspoon cinnamon
+Step  8 time :  {}
+Step  8 tools :  ['teaspoon', 'bowl']
+Step  8 methods :  ['spoon', 'combine', 'flour']
+Step  8 ingredients :  ['cinnamon', 'pie', 'flour', 'brown sugar']
+
+
+Step  9 raw :   blend in the cold butter with a fork or pastry blender until the mixture is crumbly
+Step  9 time :  {}
+Step  9 tools :  ['blender', 'pastry blender']
+Step  9 methods :  ['mix', 'blend']
+Step  9 ingredients :  ['butter ']
+
+
+Step  10 raw :   mix in the chopped nuts
+Step  10 time :  {}
+Step  10 tools :  []
+Step  10 methods :  ['mix']
+Step  10 ingredients :  []
+
+
+Step  11 raw :   sprinkle the topping over the pie
+Step  11 time :  {}
+Step  11 tools :  []
+Step  11 methods :  ['sprinkle']
+Step  11 ingredients :  ['pie']
+
+
+Step  12 raw :   reduce the heat to 350 degrees f (175 degrees c)
+Step  12 time :  {}
+Step  12 tools :  []
+Step  12 methods :  ['heat']
+Step  12 ingredients :  []
+
+
+Step  13 raw :   bake an additional 40 minutes or until set
+Step  13 time :  {'unit': 'minutes', 'quantity': 40.0}
+Step  13 tools :  []
+Step  13 methods :  ['bake', 'add']
+Step  13 ingredients :  []
+
+For all the recipes above, we tested all the functions and got no error.
