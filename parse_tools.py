@@ -1377,8 +1377,8 @@ class recipe():
 
     def original_cuisine(self):
             most_likely = {}
-            for j in self.ingredients.keys():
-                print(j)
+            # for j in self.ingredients.keys():
+            #     print(j)
             for i in data.Region.keys():
                 for j in self.ingredients.keys():
                     #print(j)
@@ -1460,7 +1460,7 @@ class recipe():
         print("Ingredients Parsing Finished")
         #Find Ingredients
         self.original_cuisine()
-        
+
         res = bs.find_all("li", attrs={"class": "subcontainer instructions-section-item"})
 
         self.process_methods_bs(res)
