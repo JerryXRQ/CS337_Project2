@@ -1,4 +1,4 @@
-# gg-project-master
+# recipe-project-master
 Recipe Parser
 Group 2
 Members: Jerry Xu, Daniel Wang, Jonathan Katz
