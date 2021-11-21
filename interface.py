@@ -26,20 +26,20 @@ def main():
         if not re.search('allrecipes.com', dish):
             print("Input should be a link from allrecipes.com. Please try again.")
             continue
-        try:
-            original = parse_tools.recipe(dish)
+        #try:
+        original = parse_tools.recipe(dish)
             #original.print_ingredients()
             #original.print_steps()
-            urlin=False
-        except:
-            print("Something went wrong when retrieving information from the url.")
+        urlin=False
+        #except:
+        print("Something went wrong when retrieving information from the url.")
         if not urlin:
             print("We have successfully parsed the recipe. Please use option verbose to see more details.")
     det=True
     while det:
-        all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'lactose','stir-fry','deep-fry']
+        all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'lactose','stir-fry','deep-fry','region']
         print("Available actions: ")
-        print("Result Display: [verbose, methods]")
+        print("Result Display: [verbose, methods, region]")
         print("Ingredients Requirements: [vegetarian, vegan, kosher, meat, gluten, lactose]")
         print("Health Related: [healthy, unhealthy]")
         print("Quantity Change: [double, half, weight]")
@@ -134,6 +134,14 @@ def main():
         elif action=='deep-fry':
             if original.to_deep_fry():
                 print("If you want more details, please use the option verbose.")
+        elif action=="region":
+            reg,ing=original.original_cuisine()
+            if len(reg)>0:
+                print("We found the following likely styles: ", reg)
+                print("These decisions are based on the following ingredients: ", ing)
+            else:
+                print("We cannot find a good match for this recipe.")
+            print('\n')
     return
 
 

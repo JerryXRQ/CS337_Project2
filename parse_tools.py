@@ -424,7 +424,7 @@ class recipe():
                     match[sw]=find[0]
         for ele in self.ingredients.keys():
             for words in ele.split():
-                if words in data.Vegan:
+                if words in data.Vegan and ele not in replaced:
                     replaced.append(ele)
                     replacement.append(data.Vegan[words])
         if len(replaced) == 0:
@@ -480,7 +480,7 @@ class recipe():
                 if ele in data.descriptors["meat"] or ele in data.descriptors["dairy"]:
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, "")
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace("  ", " ")
-                elif ele in data.Meat_Parts:
+                elif ele in data.Meat_Parts and len(replacement_m)>0:
                     chos = random.choice(replacement_m)
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ele, chos)
                 elif ele in match:
@@ -1151,6 +1151,7 @@ class recipe():
         des_rep=set()
 
         for ele in self.ingredients.keys():
+
             if ele in data.Lactose_Free:
                 replaced.append(ele)
                 replacement.append(data.Lactose_Free[ele])
@@ -1357,17 +1358,31 @@ class recipe():
                     additional.append(j)
                 elif j not in set(["to", "or", "taste", "and", "into"]):
                     new_ing.append(j)
-                    
+
+            for k in range(len(new_ing)):
+                new_ing[k]=new_ing[k].strip()
+                new_ing[k]=new_ing[k].lower()
+
+            for k in range(len(prep)):
+                prep[k]=prep[k].strip()
+
+            for k in range(len(description)):
+                description[k]=description[k].strip()
+
             new_ing = " ".join(new_ing)
-            prep = " & ".join(prep)
-            description = " ".join(description)
-            ing_val = i.attrs["value"]
-            new_ing = new_ing.strip()
+            #prep = " & ".join(prep)
+            #description = " ".join(description)
+            #ing_val = i.attrs["value"]
+            #new_ing = new_ing.strip()
+            #new_ing=new_ing.lower()
             dic={}
+            new_ing=new_ing.replace(" - "," ")
+            new_ing=new_ing.replace(" -","")
+
             dic["name"] = new_ing
             dic["quantity"] = quantity
-            dic["prep"] = prep.strip()
-            dic["descriptions"] = description.strip()
+            dic["prep"] = prep
+            dic["descriptions"] = description
             dic["unit"] = unit
             dic["unit_type"] = unit_type
             dic["additional"] = additional
@@ -1376,34 +1391,31 @@ class recipe():
         return ingredients_dic
 
     def original_cuisine(self):
-            most_likely = {}
-            # for j in self.ingredients.keys():
-            #     print(j)
-            for i in data.Region.keys():
-                for j in self.ingredients.keys():
-                    #print(j)
-                    if j in data.Region[i]:
-                        #print(i, j)
-                        if i in most_likely.keys():
-                            most_likely[i].append(j)
-                        else:
-                            most_likely[i] = [j] 
-            maxim = []
-            maximv = 0
-            ingr = []
-            for i in most_likely.keys():
-                if len(most_likely[i]) == maximv:
-                    maxim.append(i)
-                    ingr.append(most_likely[i])
-                if len(most_likely[i]) > maximv:
-                    maxim = [i]
-                    maximv = len(most_likely[i])
-                    ingr = [most_likely[i]]
+        most_likely = {}
+        # for j in self.ingredients.keys():
+        #     print(j)
+        for i in data.Region.keys():
+            for j in self.ingredients.keys():
+                #print(j)
+                if j in data.Region[i]:
+                    #print(i, j)
+                    if i in most_likely.keys():
+                        most_likely[i].append(j)
+                    else:
+                        most_likely[i] = [j]
+        maxim = []
+        maximv = 0
+        ingr = []
+        for i in most_likely.keys():
+            if len(most_likely[i]) == maximv:
+                maxim.append(i)
+                ingr.append(most_likely[i])
+            if len(most_likely[i]) > maximv:
+                maxim = [i]
+                maximv = len(most_likely[i])
+                ingr = [most_likely[i]]
 
-
-            print(maxim, ingr)
-
-            return maxim
+        return maxim, ingr
 
     def initialize(self,url):
         self.ingredients = {}
@@ -1459,7 +1471,7 @@ class recipe():
 
         print("Ingredients Parsing Finished")
         #Find Ingredients
-        self.original_cuisine()
+        #self.original_cuisine()
 
         res = bs.find_all("li", attrs={"class": "subcontainer instructions-section-item"})
 

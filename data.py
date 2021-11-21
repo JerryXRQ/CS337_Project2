@@ -608,7 +608,6 @@ descriptors_non_nation=set([
             "freshly",
             "frozen",
 
-            "seasoning",
             "active",
             "all purpose",
             "boiling",
@@ -1205,7 +1204,8 @@ Gluten_Free={
       "soy sauce":"coconut aminos",
       "pizza crust":"cauliflower crust",
       "flour":"rice flour",
-      "rigatoni pasta":"kelp noodles"
+      "rigatoni pasta":"kelp noodles",
+      "macaroni":"spaghetti squash"
 }
 
 
@@ -1345,6 +1345,11 @@ Lactose_Free={
       "milk":"soy milk",
       "butter":"coconut oil",
       "cheese":"plant-based cheese",
+      "mozzarella cheese":"plant-based mozzarella",
+      "parmesan cheese":"plant-based parmesan cheese",
+      "cheddar cheese":"plant-based cheddar cheese",
+      "swiss cheese":"plant-based swiss cheese",
+      "gouda cheese":"plant-based gouda cheese",
       "hard cheese":"tofu",
       "ice cream":"sherbet",
       "yogurt":"coconut milk yogurt",
