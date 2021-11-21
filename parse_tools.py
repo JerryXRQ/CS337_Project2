@@ -1417,6 +1417,7 @@ class recipe():
             dic={}
             new_ing_name=new_ing_name.replace(" - "," ")
             new_ing_name=new_ing_name.replace(" -","")
+            new_ing_name=new_ing_name.strip()
 
             dic["name"] = new_ing_name
             try:

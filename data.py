@@ -176,7 +176,8 @@ prep=set( [
       "quartered",
       "trimmed",
       "zested",
-      "juiced"
+      "juiced",
+      "lightly"
     ])
 
 descriptors= {
@@ -1057,7 +1058,8 @@ Vegan={
       "bread": "wheat tortilla",
       "bread toasts": "wheat tortilla",
       "bagel": "vegan bagel",
-      "pancake": "vegan pancake"
+      "pancake": "vegan pancake",
+      "eggs":"tofu"
 }
 
 Make_Healthy={"approach":{
