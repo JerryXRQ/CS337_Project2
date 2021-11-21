@@ -276,6 +276,7 @@ descriptors= {
             "fragrant",
             "fried",
             "unsalted",
+            "uncooked",
             "strips",
             "thinly",
             "slices",
@@ -927,6 +928,7 @@ Tools=set([
     "stove",
     "strainer",
     "sugar thermometer",
+    "slow cooker",
     "tablespoon",
     "tamis",
     "teaspoon",
@@ -993,7 +995,8 @@ Non_Vegan={"meat":[
       "catfish",
       "ham",
       "lobster",
-      "octopus"
+      "octopus",
+      "luncheon meat"
 ]}
 
 Vegetable=set([

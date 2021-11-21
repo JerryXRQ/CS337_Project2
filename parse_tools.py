@@ -38,8 +38,14 @@ class recipe():
 
 
     def print_methods(self):
-        print("Primary Method: ",self.primary_method[0])
-        print("Secondary Method: ", self.secondary_method[:min(len(self.secondary_method), 3)])
+        if len(self.primary_method)>0:
+            print("Primary Method: ",self.primary_method[0])
+        else:
+            print("We cannot find any matching primary methods")
+        if len(self.secondary_method)>0:
+            print("Secondary Method: ", self.secondary_method[:min(len(self.secondary_method), 3)])
+        else:
+            print("We cannot find any matching secondary methods")
 
 
     def process_ingredients(self,ele):
@@ -220,7 +226,7 @@ class recipe():
             sentence=sentence.replace(";","")
             dic={}
             temp={}
-            for st in ["   step 1   ","   step 2   ","   step 3   ","   step 4   ","   step 5   ","   step 6   ","   step 7   ","   step 8   ","   step 9   ","   step 10   "]:
+            for st in ["   step 1   ","   step 2   ","   step 3   ","   step 4   ","   step 5   ","   step 6   ","   step 7   ","   step 8   ","   step 9   ","   step 10   ","   step 11   ","   step 12   ","   step 13   ","   step 14   ","   step 15   "]:
                 sentence=sentence.replace(st,"")
             dic["raw"] = sentence
             lis=sentence.split()
@@ -1369,25 +1375,66 @@ class recipe():
             for k in range(len(description)):
                 description[k]=description[k].strip()
 
-            new_ing = " ".join(new_ing)
-            #prep = " & ".join(prep)
-            #description = " ".join(description)
-            #ing_val = i.attrs["value"]
-            #new_ing = new_ing.strip()
-            #new_ing=new_ing.lower()
-            dic={}
-            new_ing=new_ing.replace(" - "," ")
-            new_ing=new_ing.replace(" -","")
 
-            dic["name"] = new_ing
-            dic["quantity"] = quantity
+
+            new_ing_name = " ".join(new_ing)
+            words=new_ing
+            e=0
+            while e < len(words):
+                if len(words[e])==0:
+                    e+=1
+                    continue
+                elif words[e][0] == "(":
+                    desc = words[e][1:]
+                    if ")" in words[e]:
+                        desc=desc.replace(")", "")
+                        new_ing_name = new_ing_name.replace(words[e], "")
+                        new_ing_name = new_ing_name.replace("  ", " ")
+                        break
+                    else:
+                        new_ing_name = new_ing_name.replace(words[e], "")
+                        new_ing_name = new_ing_name.replace("  ", " ")
+                    e += 1
+                    while e < len(words) and words[e][-1] != ")":
+                        new_ing_name = new_ing_name.replace(words[e], "")
+                        new_ing_name = new_ing_name.replace("  ", " ")
+                        desc += " " + words[e]
+                        e += 1
+                    if e<len(words):
+                        new_ing_name = new_ing_name.replace(words[e], "")
+                        new_ing_name = new_ing_name.replace("  ", " ")
+                        desc +=" "+ words[e][:len(words[e]) - 1]
+                    additional.append(desc)
+                e += 1
+            #Handle parenthesise
+
+            dic={}
+            new_ing_name=new_ing_name.replace(" - "," ")
+            new_ing_name=new_ing_name.replace(" -","")
+
+            dic["name"] = new_ing_name
+            dic["quantity"] = float(quantity)
             dic["prep"] = prep
             dic["descriptions"] = description
             dic["unit"] = unit
             dic["unit_type"] = unit_type
             dic["additional"] = additional
 
-            ingredients_dic[new_ing] = dic
+
+            if dic["name"] in ingredients_dic and ingredients_dic[new_ing_name]["descriptions"] == dic["descriptions"] and ingredients_dic[dic['name']]["unit"] == dic["unit"] and ingredients_dic[new_ing_name]["prep"] == dic["prep"]:
+                ingredients_dic[dic["name"]]["quantity"]+=dic["quantity"]
+            elif dic['name'] in ingredients_dic and len(dic["prep"])>0 and ingredients_dic[dic['name']]["prep"]!=dic["prep"]:
+                dic['name']=dic['prep'][0]+" "+dic["name"]
+                ingredients_dic[dic['name']] = dic
+            elif dic['name'] in ingredients_dic and len(dic["descriptions"])>0 and ingredients_dic[dic['name']]["descriptions"]!=dic["descriptions"]:
+                dic['name']=dic['descriptions'][0]+" "+dic["name"]
+                ingredients_dic[dic['name']] = dic
+            elif dic['name'] in ingredients_dic:
+                    dic['name'] = dic["name"]+" for different purpose"
+                    ingredients_dic[dic['name']] = dic
+            else:
+                ingredients_dic[dic['name']]=dic
+
         return ingredients_dic
 
     def original_cuisine(self):
