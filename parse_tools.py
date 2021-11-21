@@ -1330,6 +1330,9 @@ class recipe():
     def new_ingredient_processor(self, soupy):
         ingredients_list = soupy.find_all(id=re.compile("^recipe-ingredients-label"))
         ingredients_dic = {}
+        def num_there(s):
+            return any(i.isdigit() for i in s)
+
         for i in ingredients_list:
             unit = i.attrs["data-unit"]
             if unit == "":
@@ -1344,29 +1347,63 @@ class recipe():
             prep = []
             new_ing = []
             description = []
+            additional = []
             for j in split_ing:
                 if j in data.prep:
                     prep.append(j)
                 elif j in data.descriptors_non_nation:
                     description.append(j)
-                elif j not in ["to", "or", "taste"]:
+                elif num_there(j):
+                    additional.append(j)
+                elif j not in set(["to", "or", "taste", "and", "into"]):
                     new_ing.append(j)
                     
             new_ing = " ".join(new_ing)
             prep = " & ".join(prep)
             description = " ".join(description)
             ing_val = i.attrs["value"]
+            new_ing = new_ing.strip()
             dic={}
             dic["name"] = new_ing
             dic["quantity"] = quantity
-            dic["prep"] = prep
-            dic["descriptions"] = description
+            dic["prep"] = prep.strip()
+            dic["descriptions"] = description.strip()
             dic["unit"] = unit
             dic["unit_type"] = unit_type
-            dic["additional"] = []
+            dic["additional"] = additional
+
             ingredients_dic[new_ing] = dic
         return ingredients_dic
 
+    def original_cuisine(self):
+            most_likely = {}
+            for j in self.ingredients.keys():
+                print(j)
+            for i in data.Region.keys():
+                for j in self.ingredients.keys():
+                    #print(j)
+                    if j in data.Region[i]:
+                        #print(i, j)
+                        if i in most_likely.keys():
+                            most_likely[i].append(j)
+                        else:
+                            most_likely[i] = [j] 
+            maxim = []
+            maximv = 0
+            ingr = []
+            for i in most_likely.keys():
+                if len(most_likely[i]) == maximv:
+                    maxim.append(i)
+                    ingr.append(most_likely[i])
+                if len(most_likely[i]) > maximv:
+                    maxim = [i]
+                    maximv = len(most_likely[i])
+                    ingr = [most_likely[i]]
+
+
+            print(maxim, ingr)
+
+            return maxim
 
     def initialize(self,url):
         self.ingredients = {}
@@ -1422,7 +1459,8 @@ class recipe():
 
         print("Ingredients Parsing Finished")
         #Find Ingredients
-
+        self.original_cuisine()
+        
         res = bs.find_all("li", attrs={"class": "subcontainer instructions-section-item"})
 
         self.process_methods_bs(res)
