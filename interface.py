@@ -37,13 +37,13 @@ def main():
             print("We have successfully parsed the recipe. Please use option verbose to see more details.")
     det=True
     while det:
-        all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'lactose','stir-fry','deep-fry','region']
+        all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'indian', 'lactose','stir-fry','deep-fry','region']
         print("Available actions: ")
         print("Result Display: [verbose, methods, region]")
         print("Ingredients Requirements: [vegetarian, vegan, kosher, meat, gluten, lactose]")
         print("Health Related: [healthy, unhealthy]")
         print("Quantity Change: [double, half, weight]")
-        print("Style Change: [chinese, mexican, cajun]")
+        print("Style Change: [chinese, mexican, cajun, indian]")
         print("Cooking Method Change: [stir-fry, deep-fry]")
         print('\n')
         action = input("What action do you want to perform: ")
@@ -111,6 +111,11 @@ def main():
                 #original.print_steps()
         elif action == "chinese":
             if original.chinese():
+                print("If you want more details, please use the option verbose.")
+                # original.print_ingredients()
+                # original.print_steps()
+        elif action == "indian":
+            if original.indian():
                 print("If you want more details, please use the option verbose.")
                 # original.print_ingredients()
                 # original.print_steps()

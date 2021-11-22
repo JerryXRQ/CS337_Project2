@@ -1021,6 +1021,76 @@ class recipe():
         self.process_methods(self.steps)
         return True
 
+
+    def indian(self):
+        replaced = []
+        replacement = []
+        det = False
+        present = defaultdict(list)
+        for ele in self.ingredients.keys():
+            if ele in data.Indian["ingredients"]:
+                replaced.append(ele)
+                replacement.append(data.Indian["ingredients"][ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+        for i in range(len(self.steps)):
+            for app in self.steps[i]["methods"]:
+                if app in data.Indian["approach"]:
+                    present["Method Change: "].append([app, data.Indian["approach"][app]])
+                    det = True
+            for app in self.steps[i]["tools"]:
+                if app in data.Indian["tools"]:
+                    present["Tool Change: "].append([app, data.Indian["tools"][app]])
+                    det = True
+        if not det:
+            print("Sorry, we cannot find any transformations. This particular recipe could not be made in Indian style.")
+            return False
+        else:
+            print("We found the following substitutions: ")
+            for keys in present:
+                print(keys, present[keys])
+
+        for ele in range(len(replaced)):
+            dic = {}
+            dic["name"] = replacement[ele]
+            dic["quantity"] = self.ingredients[replaced[ele]]["quantity"]
+            dic["unit"] = self.ingredients[replaced[ele]]["unit"]
+            dic["prep"] = self.ingredients[replaced[ele]]["prep"]
+            dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
+            dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            self.ingredients.pop(replaced[ele])
+            self.ingredients[replacement[ele]] = dic
+
+        for i in range(len(self.steps)):
+            new_lis_ing = []
+            new_lis_app = []
+            new_lis_tools = []
+            for ing in self.steps[i]["ingredients"]:
+                if ing in replaced:
+                    new_lis_ing.append(replacement[replaced.index(ing)])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                else:
+                    new_lis_ing.append(ing)
+            self.steps[i]["ingredients"] = new_lis_ing
+
+            for app in self.steps[i]["methods"]:
+                if app in data.Indian["approach"]:
+                    new_lis_app.append(data.Indian["approach"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Indian["approach"][app])
+                else:
+                    new_lis_app.append(app)
+            self.steps[i]["methods"] = new_lis_app
+
+            for app in self.steps[i]["tools"]:
+                if app in data.Indian["tools"]:
+                    new_lis_tools.append(data.Indian["tools"][app])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(app, data.Indian["tools"][app])
+                else:
+                    new_lis_tools.append(app)
+            self.steps[i]["tools"] = new_lis_tools
+        self.process_methods(self.steps)
+        return True
+
     def mexico(self):
         replaced = []
         replacement = []

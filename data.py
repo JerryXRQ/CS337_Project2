@@ -1267,7 +1267,7 @@ Chinese = \
             "red wine":"shaoxing rice wine",
             "vinegar":"white rice vinegar",
             "pasta":"dried egg noodles",
-            "spaghetti":"dried egg noodles",
+            "spaghetti":"dried egg noodles"
             #"noodles":"vermicelli noodles"
       }
 }
@@ -1428,3 +1428,63 @@ Meat_Parts=set([
       "hock",
       "totters"
 ])
+
+Indian = \
+      {"approach":{
+            "steam":"dum (Indian steam)",
+            "temper":"Tadka/Baghar (Indian temper)",
+            "saut":"Bhunao (Indian saute)",
+            "saute":"Bhunao (Indian saute)",
+            "smoke":"Dhuanaar (Indian smoke)",
+            "fry":"Talina/Talna (Indian deep fry)",
+            "roast":"Tandoori (Indian roast)",
+            "soak":"boil",
+            "immerse":"braise",
+            "bath":"braise",
+            "broil":"roast",
+            "grill":"roast",
+            "bake":"dum (Indian steam)"
+      },
+      "tools":{
+            "fork":"chopsticks",
+            "spoon":"cooking shovel",
+            "pan":"wok",
+            "tray":"wok",
+            "oven":"steamer",
+            "container":"stainless steel spice container",
+            "box":"stainless steel spice container",
+            "pesetle": "stainless steel mortar",
+            "spoon": "grinder",
+            "blender": "strainer",
+            "pot": "deep fry pan",
+            "pan": "deep fry pan",
+            "knive": "stainless stell knive"
+      },
+      "ingredients":{
+            "chili":"dried chili",
+            "hot pepper":"chili powder",
+            "pepper":"black pepper",
+            "spice":"cardamom",
+            "parsley":"cassia bark",
+            "coriander":"cassia bark",
+            "seasoning":"cumin",
+            "salt":"nutmeg and mace",
+            "lemon":"vinegar",
+            "olive oil": "sesame oil",
+            "butter":"sesame oil",
+            "starch":"cornstarch",
+            "bbq sauce":"oyster sauce",
+            "tomato sauce":"hoisin sauce",
+            "ketchup":"hosin sauce",
+            "cabbage":"napa cabbage",
+            "mushroom":"shiitake mushroom",
+            "mushrooms":"shiitake mushrooms",
+            "tomato sauce":"chilli bean sauce",
+            "red chilli sauce":"chilli bean sauce",
+            "mayonnaise":"chilli bean sauce",
+            "mayo":"chilli bean sauce",
+            "vinegar":"white rice vinegar",
+            "pasta":"dried egg noodles",
+            "spaghetti":"dried egg noodles"
+      }
+}
