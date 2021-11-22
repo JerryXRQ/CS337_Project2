@@ -1040,6 +1040,8 @@ Vegan={
       "cheese": "crumbled tofu",
       "butter": "vegan margarine",
       "yogurt": "almond milk yogurt",
+      "sour cream":"vegan sour cream",
+      "heavy cream":"coconut cream",
       "scrambled egg": "tofu scramble",
       "egg whites":'tofu',
       "egg white":"tofu",

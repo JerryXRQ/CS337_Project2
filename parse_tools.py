@@ -429,10 +429,14 @@ class recipe():
                 for sw in ele.split():
                     match[sw]=find[0]
         for ele in self.ingredients.keys():
-            for words in ele.split():
-                if words in data.Vegan and ele not in replaced:
-                    replaced.append(ele)
-                    replacement.append(data.Vegan[words])
+            if ele in data.Vegan:
+                replaced.append(ele)
+                replacement.append(data.Vegan[ele])
+            else:
+                for words in ele.split():
+                    if words in data.Vegan and ele not in replaced:
+                        replaced.append(ele)
+                        replacement.append(data.Vegan[words])
         if len(replaced) == 0:
             print("Sorry, we fail to find a replacement. This recipe is already vegan.")
             return True
