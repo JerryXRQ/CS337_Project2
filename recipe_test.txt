@@ -66,11 +66,11 @@ Descriptions:  []
 Additional Instruction:  []
 
 
-Name:  unbaked pie shell
+Name:  pie shell
 Quantity:  1.0
 Unit:  (9 inch)
 Preparation:  []
-Descriptions:  []
+Descriptions:  ['unbaked']
 Additional Instruction:  []
 
 
@@ -145,7 +145,7 @@ Step  6 raw :   pour filling into pie shell
 Step  6 time :  {}
 Step  6 tools :  []
 Step  6 methods :  ['pour']
-Step  6 ingredients :  ['pie', 'shell']
+Step  6 ingredients :  ['pie shell']
 
 
 Step  7 raw :   bake for 15 minutes in the preheated oven
@@ -157,16 +157,16 @@ Step  7 ingredients :  []
 
 Step  8 raw :   while the pie is baking prepare the streusel topping: in a small bowl combine the flour brown sugar and 1 teaspoon cinnamon
 Step  8 time :  {}
-Step  8 tools :  ['teaspoon', 'bowl']
-Step  8 methods :  ['spoon', 'combine', 'flour']
+Step  8 tools :  ['bowl', 'teaspoon']
+Step  8 methods :  ['flour', 'combine', 'spoon']
 Step  8 ingredients :  ['cinnamon', 'pie', 'flour', 'brown sugar']
 
 
 Step  9 raw :   blend in the cold butter with a fork or pastry blender until the mixture is crumbly
 Step  9 time :  {}
 Step  9 tools :  ['blender', 'pastry blender']
-Step  9 methods :  ['mix', 'blend']
-Step  9 ingredients :  ['butter ']
+Step  9 methods :  ['blend', 'mix']
+Step  9 ingredients :  ['butter']
 
 
 Step  10 raw :   mix in the chopped nuts
@@ -195,5 +195,208 @@ Step  13 time :  {'unit': 'minutes', 'quantity': 40.0}
 Step  13 tools :  []
 Step  13 methods :  ['bake', 'add']
 Step  13 ingredients :  []
+
+
+https://www.allrecipes.com/recipe/147103/delicious-egg-salad-for-sandwiches/
+
+Name:  eggs
+Quantity:  8.0
+Unit:  unit
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  mayonnaise
+Quantity:  0.5
+Unit:  cup
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  yellow mustard
+Quantity:  1.0
+Unit:  teaspoon
+Preparation:  []
+Descriptions:  ['prepared']
+Additional Instruction:  []
+
+
+Name:  green onion
+Quantity:  0.25
+Unit:  cup
+Preparation:  ['chopped']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  salt pepper
+Quantity:  0
+Unit:  unit
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  paprika
+Quantity:  0.25
+Unit:  teaspoon
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Step  1 raw :   place egg in a saucepan and cover with cold water
+Step  1 time :  {}
+Step  1 tools :  ['saucepan', 'pan']
+Step  1 methods :  ['cover', 'place']
+Step  1 ingredients :  ['eggs']
+
+
+Step  2 raw :   bring water to a boil and immediately remove from heat
+Step  2 time :  {}
+Step  2 tools :  []
+Step  2 methods :  ['boil', 'heat']
+Step  2 ingredients :  []
+
+
+Step  3 raw :   cover and let eggs stand in hot water for 10 to 12 minutes
+Step  3 time :  {'unit': 'minutes', 'quantity': 12.0}
+Step  3 tools :  []
+Step  3 methods :  ['cover']
+Step  3 ingredients :  ['eggs']
+
+
+Step  4 raw :   remove from hot water cool peel and chop
+Step  4 time :  {}
+Step  4 tools :  []
+Step  4 methods :  ['cool']
+Step  4 ingredients :  []
+
+
+Step  5 raw :   place the chopped eggs in a bowl and stir in the mayonnaise mustard and green onion
+Step  5 time :  {}
+Step  5 tools :  ['bowl']
+Step  5 methods :  ['stir', 'place']
+Step  5 ingredients :  ['eggs', 'mayonnaise', 'mustard', 'green onion']
+
+
+Step  6 raw :   season with salt pepper and paprika
+Step  6 time :  {}
+Step  6 tools :  []
+Step  6 methods :  ['season']
+Step  6 ingredients :  ['salt pepper', 'paprika']
+
+
+Step  7 raw :   stir and serve on your favorite bread or crackers
+Step  7 time :  {}
+Step  7 tools :  []
+Step  7 methods :  ['serve', 'stir']
+Step  7 ingredients :  []
+
+https://www.allrecipes.com/recipe/246628/spaghetti-cacio-e-pepe/
+
+Name:  spaghetti
+Quantity:  1.0
+Unit:  pound
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  olive oil
+Quantity:  6.0
+Unit:  tablespoons
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  garlic
+Quantity:  2.0
+Unit:  cloves
+Preparation:  ['minced']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  black pepper
+Quantity:  2.0
+Unit:  teaspoons
+Preparation:  ['ground']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  pecorino romano cheese
+Quantity:  1.75
+Unit:  cups
+Preparation:  ['grated']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Step  1 raw :   bring a large pot of lightly salted water to a boil
+Step  1 time :  {}
+Step  1 tools :  ['pot']
+Step  1 methods :  ['boil']
+Step  1 ingredients :  ['oil']
+
+
+Step  2 raw :   cook spaghetti in the boiling water stirring occasionally until tender yet firm to the bite about 10 minutes
+Step  2 time :  {'unit': 'minutes', 'quantity': 10.0}
+Step  2 tools :  []
+Step  2 methods :  ['boil', 'stir']
+Step  2 ingredients :  ['spaghetti', 'oil', 'tender']
+
+
+Step  3 raw :   scoop out some of the cooking water and reserve
+Step  3 time :  {}
+Step  3 tools :  ['scoop']
+Step  3 methods :  ['serve']
+Step  3 ingredients :  []
+
+
+Step  4 raw :   drain spaghetti
+Step  4 time :  {}
+Step  4 tools :  []
+Step  4 methods :  ['drain']
+Step  4 ingredients :  ['spaghetti']
+
+
+Step  5 raw :   heat oil in a large skillet over medium heat
+Step  5 time :  {}
+Step  5 tools :  ['skillet']
+Step  5 methods :  ['heat']
+Step  5 ingredients :  ['oil']
+
+
+Step  6 raw :   add garlic and pepper cook and stir until fragrant 1 to 2 minutes
+Step  6 time :  {'unit': 'minutes', 'quantity': 2.0}
+Step  6 tools :  []
+Step  6 methods :  ['add', 'stir']
+Step  6 ingredients :  ['garlic', 'pepper']
+
+
+Step  7 raw :   add spaghetti and pecorino romano cheese
+Step  7 time :  {}
+Step  7 tools :  []
+Step  7 methods :  ['add']
+Step  7 ingredients :  ['spaghetti', 'pecorino romano cheese']
+
+
+Step  8 raw :   ladle in.5 cup of reserved cooking water stir until cheese is melted about 1 minute
+Step  8 time :  {'unit': 'minute', 'quantity': 1.0}
+Step  8 tools :  ['cup', 'ladle']
+Step  8 methods :  ['melt', 'stir', 'serve']
+Step  8 ingredients :  ['cheese']
+
+
+Step  9 raw :   add more cooking water until sauce coats spaghetti about 1 minute more
+Step  9 time :  {'unit': 'minute', 'quantity': 1.0}
+Step  9 tools :  []
+Step  9 methods :  ['add', 'coat']
+Step  9 ingredients :  ['spaghetti']
 
 For all the recipes above, we tested all the functions and got no error.

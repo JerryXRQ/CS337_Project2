@@ -517,7 +517,8 @@ descriptors_non_nation=set([
             "breast",
             "neck",
             "giblets",
-
+            "unbaked",
+            "prepared",
             "whole",
             "finger-sized",
             "all-purpose",
@@ -569,6 +570,7 @@ descriptors_non_nation=set([
             "curdled",
             "cold",
             "cubes",
+            "chunks",
             "dark",
             "decadent",
             "delactable",
@@ -605,11 +607,11 @@ descriptors_non_nation=set([
             "plain",
             "extra-virgin",
             "seedless",
-
+            "pieces",
             "cooked",
             "freshly",
             "frozen",
-
+            "garnish"
             "active",
             "all purpose",
             "boiling",
@@ -1210,7 +1212,8 @@ Gluten_Free={
       "pizza crust":"cauliflower crust",
       "flour":"rice flour",
       "rigatoni pasta":"kelp noodles",
-      "macaroni":"spaghetti squash"
+      "macaroni":"spaghetti squash",
+      "rigatoni":"kelp noodles"
 }
 
 

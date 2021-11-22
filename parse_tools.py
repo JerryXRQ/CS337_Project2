@@ -216,11 +216,11 @@ class recipe():
 
         #print(sentences)
         for sentence in sentences:
-            sentence=sentence.replace(" 1/2"," .5")
+            sentence=sentence.replace(" 1/2",".5")
             sentence=sentence.replace("1/2", ".5")
-            sentence=sentence.replace(" 1/4"," .25")
+            sentence=sentence.replace(" 1/4",".25")
             sentence=sentence.replace("1/4", ".25")
-            sentence = sentence.replace(" 3/4", " .75")
+            sentence = sentence.replace(" 3/4", ".75")
             sentence = sentence.replace("3/4", ".75")
             sentence=sentence.replace(",","")
             sentence=sentence.replace(";","")
@@ -1267,6 +1267,16 @@ class recipe():
                 else:
                     new_t.append(t)
             self.steps[index]["tools"]=new_t
+
+            new_met = []
+            for m in self.steps[index]["methods"]:
+                if m in data.Cook_Approach:
+                    if "stir-fry" not in new_met:
+                        new_met.append("stir-fry")
+                    else:
+                        new_met.append(m)
+            self.steps[index]["methods"] = new_met
+
         return True
 
     def to_deep_fry(self):
@@ -1330,6 +1340,16 @@ class recipe():
                 else:
                     new_t.append(t)
             self.steps[index]["tools"]=new_t
+
+            new_met=[]
+            for m in self.steps[index]["methods"]:
+                if m in data.Cook_Approach:
+                    if "deep-fry" not in new_met:
+                        new_met.append("deep-fry")
+                    else:
+                        new_met.append(m)
+            self.steps[index]["methods"]=new_met
+
         new_step={
             "raw":"cover main ingredients with flour",
             "time":{},
@@ -1343,8 +1363,6 @@ class recipe():
     def new_ingredient_processor(self, soupy):
         ingredients_list = soupy.find_all(id=re.compile("^recipe-ingredients-label"))
         ingredients_dic = {}
-        def num_there(s):
-            return any(i.isdigit() for i in s)
 
         for i in ingredients_list:
             unit = i.attrs["data-unit"]
@@ -1366,9 +1384,7 @@ class recipe():
                     prep.append(j)
                 elif j in data.descriptors_non_nation:
                     description.append(j)
-                elif num_there(j):
-                    additional.append(j)
-                elif j not in set(["to", "or", "taste", "and", "into"]):
+                elif j not in set(["to", "or", "taste", "and", "into", "for"]):
                     new_ing.append(j)
 
             for k in range(len(new_ing)):
@@ -1413,6 +1429,30 @@ class recipe():
                     additional.append(desc)
                 e += 1
             #Handle parenthesise
+            update=new_ing_name.split()
+            #print(update)
+            for w in range(len(update)):
+                temp=update[w].strip()
+                if temp in data.Liquid_Measurements or temp in data.Solid_Measurements:
+                    if w > 0:
+                        try:
+                            q = float(update[w - 1])
+                            unit = temp
+                            new_ing_name = new_ing_name.replace(update[w], "")
+                            new_ing_name = new_ing_name.replace(update[w - 1], "")
+                            new_ing_name = new_ing_name.replace("  ", "")
+                            additional.append(str(q) + " " + unit)
+                        except:
+                            try:
+                                q = float(Fraction(update[w - 1]))
+                                add = str(q) + " " + update[w]
+                                additional.append(add)
+                                new_ing_name = new_ing_name.replace(update[w], "")
+                                new_ing_name = new_ing_name.replace(update[w - 1], "")
+                                new_ing_name = new_ing_name.replace("  ", "")
+                            except:
+                                continue
+            #handling description with units
 
             dic={}
             new_ing_name=new_ing_name.replace(" - "," ")
