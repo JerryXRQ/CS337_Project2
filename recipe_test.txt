@@ -1,5 +1,6 @@
 We have tested our code using the following recipes
 
+Brown Family's Favorite Pumpkin Pie
 https://www.allrecipes.com/recipe/12504/brown-familys-favorite-pumpkin-pie/
 
 Name:  pumpkin puree
@@ -196,7 +197,7 @@ Step  13 tools :  []
 Step  13 methods :  ['bake', 'add']
 Step  13 ingredients :  []
 
-
+Delicious Egg Salad for Sandwiches
 https://www.allrecipes.com/recipe/147103/delicious-egg-salad-for-sandwiches/
 
 Name:  eggs
@@ -295,6 +296,7 @@ Step  7 tools :  []
 Step  7 methods :  ['serve', 'stir']
 Step  7 ingredients :  []
 
+Spaghetti Cacio e Pepe
 https://www.allrecipes.com/recipe/246628/spaghetti-cacio-e-pepe/
 
 Name:  spaghetti
@@ -398,5 +400,90 @@ Step  9 time :  {'unit': 'minute', 'quantity': 1.0}
 Step  9 tools :  []
 Step  9 methods :  ['add', 'coat']
 Step  9 ingredients :  ['spaghetti']
+
+Maple Roasted Brussels Sprouts with Bacon
+https://www.allrecipes.com/recipe/228875/maple-roasted-brussels-sprouts-with-bacon/
+
+Name:  brussels sprouts
+Quantity:  1.0
+Unit:  pound
+Preparation:  ['trimmed']
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  olive oil
+Quantity:  0.25
+Unit:  cup
+Preparation:  []
+Descriptions:  ['extra-virgin']
+Additional Instruction:  []
+
+
+Name:  pure maple syrup
+Quantity:  3.0
+Unit:  tablespoons
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  bacon
+Quantity:  4.0
+Unit:  slices
+Preparation:  ['cut']
+Descriptions:  ['pieces']
+Additional Instruction:  ['0.5 inch']
+
+
+Name:  salt
+Quantity:  0.5
+Unit:  teaspoon
+Preparation:  []
+Descriptions:  []
+Additional Instruction:  []
+
+
+Name:  black pepper
+Quantity:  0.25
+Unit:  teaspoon
+Preparation:  ['ground']
+Descriptions:  ['freshly']
+Additional Instruction:  []
+
+
+Step  1 raw :   preheat oven to 400 degrees f (200 degrees c)
+Step  1 time :  {}
+Step  1 tools :  ['oven']
+Step  1 methods :  ['preheat', 'heat']
+Step  1 ingredients :  []
+
+
+Step  2 raw :   place brussels sprouts in a single layer in a baking dish
+Step  2 time :  {}
+Step  2 tools :  ['dish']
+Step  2 methods :  ['layer', 'place']
+Step  2 ingredients :  ['brussels sprouts']
+
+
+Step  3 raw :   drizzle with olive oil and maple syrup toss to coat
+Step  3 time :  {}
+Step  3 tools :  []
+Step  3 methods :  ['toss', 'coat']
+Step  3 ingredients :  ['olive oil', 'maple', 'syrup']
+
+
+Step  4 raw :   sprinkle with bacon season with salt and black pepper
+Step  4 time :  {}
+Step  4 tools :  []
+Step  4 methods :  ['sprinkle', 'season']
+Step  4 ingredients :  ['bacon', 'salt', 'black pepper']
+
+
+Step  5 raw :   roast in the preheated oven until bacon is crispy and brussels sprouts are caramelized 45 minutes stirring halfway through
+Step  5 time :  {'unit': 'minutes', 'quantity': 45.0}
+Step  5 tools :  ['oven']
+Step  5 methods :  ['preheat', 'heat', 'stir']
+Step  5 ingredients :  ['brussels sprouts', 'bacon']
 
 For all the recipes above, we tested all the functions and got no error.

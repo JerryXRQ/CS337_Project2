@@ -1377,7 +1377,8 @@ Cook_Approach=set([
       "grill",
       "steam",
       "saute",
-      "deep-fry"
+      "deep-fry",
+      "roast"
 ])
 
 Approach_Tools={

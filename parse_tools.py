@@ -1429,6 +1429,7 @@ class recipe():
                     additional.append(desc)
                 e += 1
             #Handle parenthesise
+            new_ing_name=new_ing_name.replace("-inch"," inch")
             update=new_ing_name.split()
             #print(update)
             for w in range(len(update)):
