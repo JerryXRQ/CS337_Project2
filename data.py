@@ -1488,3 +1488,46 @@ Indian = \
             "spaghetti":"dried egg noodles"
       }
 }
+
+
+French = \
+      {"approach":{
+            "flavor":"bouquet garni",
+            "cut":"chiffonade cut",
+            "drizzle":"coulis",
+            "loose":"déglacer",
+            "degalz":"déglacer",
+            "reduc":"demi-glace",
+            "prepare":"en papillote",
+            "vegetable":"julienne vegetable",
+            "brais":"mirepoix",
+            "simmer":"mirepoix",
+            "put":"mise en place",
+            "thicken":"roux",
+            "whisk":"roux",
+            "fry":"sauté"
+      },
+      "tools":{
+            "knife":"fish spatula",
+            "board":"rimmed baking sheet",
+            "pan":"braising pans",
+            "tray":"rimmed baking sheet",
+            "pot":"non-stick skillets",
+            "paper":"silicone baking mat",
+            "towel":"linen kitchen towels",
+            "oven": "dutch oven",
+            "bowl": "ramekins",
+            "dish": "oval baking dish"
+      },
+      "ingredients":{
+            "oil":"olive oil",
+            "mustard":"dijon mustard",
+            "salt":"fleur de sel",
+            "cream":"crème fraîche",
+            "mushroom":"herves de provence",
+            "onion":"shallots",
+            "garlic":"shallots",
+            "bread":"french bread",
+            "cheese":"french cheese"
+      }
+}
