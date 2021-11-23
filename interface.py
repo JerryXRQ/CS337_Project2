@@ -38,14 +38,14 @@ def main():
             print("We have successfully parsed the recipe. Please use option verbose to see more details.")
     det=True
     while det:
-        all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'indian', 'french', 'lactose','stir-fry','deep-fry','region', 'undo']
+        all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'indian', 'french', 'lactose','stir-fry','deep-fry','region', 'undo','steam']
         print("Available actions: ")
         print("Result Display: [verbose, methods, region]")
         print("Ingredients Requirements: [vegetarian, vegan, kosher, meat, gluten, lactose]")
         print("Health Related: [healthy, unhealthy]")
         print("Quantity Change: [double, half, weight]")
         print("Style Change: [chinese, mexican, cajun, indian, french]")
-        print("Cooking Method Change: [stir-fry, deep-fry]")
+        print("Cooking Method Change: [stir-fry, deep-fry, steam]")
         print("Undo: [undo]")
         print('\n')
         action = input("What action do you want to perform: ")
@@ -199,6 +199,11 @@ def main():
             else:
                 print("We cannot find a good match for this recipe.")
             print('\n')
+        elif action=="steam":
+            temp=copy.deepcopy(original)
+            if original.to_steam():
+                print("If you want more details, please use the option verbose.")
+                print("Use option undo to undo your previous selection.")
     return
 
 

@@ -1425,6 +1425,75 @@ class recipe():
 
         return True
 
+    def to_steam(self):
+        det=False
+        approach=[]
+        for s in self.steps:
+            for w in s["raw"].split():
+                if w in data.Cook_Approach and w!='steam':
+                    det=True
+                    if w not in approach:
+                        approach.append(w)
+        if not det:
+            print("Sorry, we cannot find any cooking methods that can be transformed to steam.")
+            return False
+        else:
+            print("We will transform the following method to steam: ",approach)
+
+        if "water" not in self.ingredients:
+            dic = {}
+            dic["name"] = "water"
+            dic["quantity"] = 1
+            dic["unit"] = "Based on the size of steamer"
+            dic["prep"] = []
+            dic["descriptions"] = []
+            dic["additional"] = ["Add before steam"]
+            self.ingredients["vwater"]=dic
+        else:
+            dic = {}
+            dic["name"] = "water for steaming"
+            dic["quantity"] = 1
+            dic["unit"] = "Based on the size of steamer"
+            dic["prep"] = []
+            dic["descriptions"] = []
+            dic["additional"] = ["Add before steam"]
+            self.ingredients["water for steaming"] = dic
+
+
+        for index in range(len(self.steps)):
+            for w in self.steps[index]["raw"].split():
+                if w in data.Cook_Approach:
+                    self.steps[index]["raw"]=self.steps[index]["raw"].replace(w,"steam")
+                if w in data.Approach_Tools:
+                    self.steps[index]["raw"] = self.steps[index]["raw"].replace(w, "steamer")
+            new_t=[]
+            for t in self.steps[index]["tools"]:
+                if t in data.Approach_Tools:
+                    if "steamer" not in new_t:
+                        new_t.append("steamer")
+                else:
+                    new_t.append(t)
+            self.steps[index]["tools"]=new_t
+
+            new_met=[]
+            for m in self.steps[index]["methods"]:
+                if m in data.Cook_Approach:
+                    if "steam" not in new_met:
+                        new_met.append("steam")
+                    else:
+                        new_met.append(m)
+            self.steps[index]["steam"]=new_met
+
+        new_step={
+            "raw":"add water to steamer",
+            "time":{},
+            "tools":[],
+            "methods":["add"],
+            "ingredients":['water']
+        }
+        self.steps=[new_step]+self.steps
+        return True
+
     def to_deep_fry(self):
         det=False
         approach=[]
