@@ -836,7 +836,7 @@ class recipe():
         
         if meat != 0:
             for ele in self.ingredients.keys():
-                print(ele)
+                #print(ele)
                 for i in ele.split(" "):
                     if i in data.Lactose_Free.keys():
                         print(i)
@@ -904,6 +904,11 @@ class recipe():
                 replacement.append(data.Gluten_Free[ele])
                 present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
                 det = True
+            elif "pasta" in ele or "macaroni" in ele:
+                replaced.append(ele)
+                replacement.append("spaghetti squash")
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
 
         if not det:
             print("Sorry, we cannot find any transformation. This recipe is already gluten free")
@@ -947,6 +952,9 @@ class recipe():
                 if ing in replaced:
                     new_lis_ing.append(replacement[replaced.index(ing)])
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                elif ing=="pasta" or ing=="macaroni":
+                    new_lis_ing.append("spaghetti squash")
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, "spaghetti squash")
                 else:
                     new_lis_ing.append(ing)
             self.steps[i]["ingredients"] = new_lis_ing
@@ -1313,6 +1321,11 @@ class recipe():
             if ele in data.Lactose_Free:
                 replaced.append(ele)
                 replacement.append(data.Lactose_Free[ele])
+                present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
+                det = True
+            elif "cheese" in ele:
+                replaced.append(ele)
+                replacement.append("plant-based "+ele)
                 present["Ingredient Change: "].append([replaced[-1], replacement[-1]])
                 det = True
 
@@ -1744,9 +1757,21 @@ class recipe():
             elif dic['name'] in ingredients_dic and len(dic["prep"])>0 and ingredients_dic[dic['name']]["prep"]!=dic["prep"]:
                 dic['name']=dic['prep'][0]+" "+dic["name"]
                 ingredients_dic[dic['name']] = dic
+            elif dic['name'] in ingredients_dic and len(ingredients_dic[dic["name"]]["prep"])>0 and ingredients_dic[dic['name']]["prep"]!=dic["prep"]:
+                temp=ingredients_dic[dic['name']]
+                temp['name']=temp['prep'][0]+" "+temp['name']
+                ingredients_dic[temp['name']]=temp
+                ingredients_dic[dic['name']] = dic
             elif dic['name'] in ingredients_dic and len(dic["descriptions"])>0 and ingredients_dic[dic['name']]["descriptions"]!=dic["descriptions"]:
                 dic['name']=dic['descriptions'][0]+" "+dic["name"]
                 ingredients_dic[dic['name']] = dic
+
+            elif dic['name'] in ingredients_dic and len(ingredients_dic[dic["name"]]["descriptions"])>0 and ingredients_dic[dic['name']]["descriptions"]!=dic["descriptions"]:
+                temp=ingredients_dic[dic['name']]
+                temp['name']=temp['descriptions'][0]+" "+temp['name']
+                ingredients_dic[temp['name']]=temp
+                ingredients_dic[dic['name']] = dic
+
             elif dic['name'] in ingredients_dic:
                     dic['name'] = dic["name"]+" for different purpose"
                     ingredients_dic[dic['name']] = dic

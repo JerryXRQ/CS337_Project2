@@ -646,7 +646,8 @@ descriptors_non_nation=set([
             "whole",
             "unpeeled",
             "room",
-            "temperature"
+            "temperature",
+            "kosher"
 ])
       
 
@@ -1362,11 +1363,6 @@ Lactose_Free={
       "milk":"soy milk",
       "butter":"coconut oil",
       "cheese":"plant-based cheese",
-      "mozzarella cheese":"plant-based mozzarella",
-      "parmesan cheese":"plant-based parmesan cheese",
-      "cheddar cheese":"plant-based cheddar cheese",
-      "swiss cheese":"plant-based swiss cheese",
-      "gouda cheese":"plant-based gouda cheese",
       "hard cheese":"tofu",
       "ice cream":"sherbet",
       "yogurt":"coconut milk yogurt",
@@ -1423,7 +1419,6 @@ Meat_Parts=set([
       "thighs",
       "wing",
       "wings",
-      "tender",
       "tenderloin",
       "drum stick",
       "breast",
