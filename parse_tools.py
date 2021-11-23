@@ -7,6 +7,7 @@ import random
 from fractions import Fraction
 from math import floor
 import re
+import copy
 
 class recipe():
     ingredients = {}
@@ -1666,6 +1667,17 @@ class recipe():
         self.secondary_method = []
         self.steps = []
         self.__init__(url)
+
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        setattr(result, 'primary_method', [copy.deepcopy(x) for x in self.primary_method])
+        setattr(result, 'secondary_method', [copy.deepcopy(x) for x in self.secondary_method])
+        setattr(result, 'steps', [copy.deepcopy(x) for x in self.steps])
+        setattr(result, 'ingredients', copy.deepcopy(self.ingredients))
+        return result
+
 
     def __init__(self,dish):
         html = requests.get(dish)
