@@ -662,7 +662,8 @@ Method_Primary=set([
       "saute",
       "poach",
       "deep-fry",
-      "shallow-fry"
+      "shallow-fry",
+      "roast"
     ])
 Tools_to_Method={
       "air-fryer":"air-fry",
@@ -1391,12 +1392,12 @@ Approach_Tools={
       "grill",
       "steamer",
       "fry pan",
-      "sauce pan",
+      "saucepan",
       "stock pot",
       "skillet",
       "griddle",
       "plancha",
-      "deep fryer"
+      "deep-fryer"
 }
 
 

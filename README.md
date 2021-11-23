@@ -34,14 +34,14 @@ Ingredients: We included descriptor and preparation.
 
 Methods: We added secondary cooking methods finder.
 
-Transformation: For the style of cuisine, we have included Chinese, Indian, Mexican, Cajun, and French. For quantity change, we implemented double, half, and weight conversion. For cooking method change, we added switch to stir-fry, deep-fry, and steam. These transformations include necessary ingredient and step additions. For special food constraints, we included kosher, gluten-free, and lactose-free.
+Transformation: For the style of cuisine, we have included Chinese, Indian, Mexican, Cajun, and French. For quantity change, we implemented double, half, and weight conversion. For cooking method change, we added switch to stir-fry, deep-fry, bake, and steam. These transformations include necessary ingredient and step additions. For special food constraints, we included kosher, gluten-free, and lactose-free.
 
 Control Features: We allowed the user to restore the previous recipe with command "undo".
 
 Testing Tools: We built a tester that checks all program features on a selected set of recipes.
 
-Additional Tasks in Assignment Description: 14 (Excluding one required style change)
-Additional Tasks we Propose: 4
+Additional Tasks in Assignment Description: 15 (Excluding one required style change)
+Additional Tasks we Propose: 4 (weight conversion, kosher, undo, and tester)
 
 
 
@@ -62,4 +62,5 @@ Added undo feature.
 
 ### Jonathan Katz:
 Added kosher, Cajun, and unit conversion functions.
+Improved the ingredient parser.
 Designed the tester.

@@ -1419,8 +1419,8 @@ class recipe():
                 if m in data.Cook_Approach:
                     if "stir-fry" not in new_met:
                         new_met.append("stir-fry")
-                    else:
-                        new_met.append(m)
+                else:
+                    new_met.append(m)
             self.steps[index]["methods"] = new_met
 
         return True
@@ -1435,10 +1435,10 @@ class recipe():
                     if w not in approach:
                         approach.append(w)
         if not det:
-            print("Sorry, we cannot find any cooking methods that can be transformed to steam.")
+            print("Sorry, we cannot find any cooking methods that can be transformed to steaming.")
             return False
         else:
-            print("We will transform the following method to steam: ",approach)
+            print("We will transform the following method to steaming: ",approach)
 
         if "water" not in self.ingredients:
             dic = {}
@@ -1448,7 +1448,7 @@ class recipe():
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["Add before steam"]
-            self.ingredients["vwater"]=dic
+            self.ingredients["water"]=dic
         else:
             dic = {}
             dic["name"] = "water for steaming"
@@ -1480,9 +1480,9 @@ class recipe():
                 if m in data.Cook_Approach:
                     if "steam" not in new_met:
                         new_met.append("steam")
-                    else:
-                        new_met.append(m)
-            self.steps[index]["steam"]=new_met
+                else:
+                    new_met.append(m)
+            self.steps[index]["methods"]=new_met
 
         new_step={
             "raw":"add water to steamer",
@@ -1504,7 +1504,7 @@ class recipe():
                     if w not in approach:
                         approach.append(w)
         if not det:
-            print("Sorry, we cannot find any cooking methods that can be transformed to stir-fry.")
+            print("Sorry, we cannot find any cooking methods that can be transformed to deep-fry.")
             return False
         else:
             print("We will transform the following method to deep-fry: ",approach)
@@ -1561,8 +1561,8 @@ class recipe():
                 if m in data.Cook_Approach:
                     if "deep-fry" not in new_met:
                         new_met.append("deep-fry")
-                    else:
-                        new_met.append(m)
+                else:
+                    new_met.append(m)
             self.steps[index]["methods"]=new_met
 
         new_step={
@@ -1573,6 +1573,58 @@ class recipe():
             "ingredients":['flour']
         }
         self.steps=[new_step]+self.steps
+        return True
+
+    def to_bake(self):
+        det=False
+        approach=[]
+        for s in self.steps:
+            for w in s["raw"].split():
+                if w in data.Cook_Approach and w!='bake':
+                    det=True
+                    if w not in approach:
+                        approach.append(w)
+        if not det:
+            print("Sorry, we cannot find any cooking methods that can be transformed to baking.")
+            return False
+        else:
+            print("We will transform the following method to baking: ",approach)
+
+        preheat=False
+        for index in range(len(self.steps)):
+            for w in self.steps[index]["raw"].split():
+                if w in data.Cook_Approach:
+                    self.steps[index]["raw"]=self.steps[index]["raw"].replace(w,"bake")
+                if w in data.Approach_Tools:
+                    self.steps[index]["raw"] = self.steps[index]["raw"].replace(w, "oven")
+                if w=="preheat":
+                    preheat=True
+            new_t=[]
+            for t in self.steps[index]["tools"]:
+                if t in data.Approach_Tools:
+                    if "oven" not in new_t:
+                        new_t.append("oven")
+                else:
+                    new_t.append(t)
+            self.steps[index]["tools"]=new_t
+
+            new_met=[]
+            for m in self.steps[index]["methods"]:
+                if m in data.Cook_Approach:
+                    if "bake" not in new_met:
+                        new_met.append("bake")
+                else:
+                    new_met.append(m)
+            self.steps[index]["methods"]=new_met
+        if not preheat:
+            new_step={
+                "raw":"preheat oven to 400°F",
+                "time":{},
+                "tools":["oven"],
+                "methods":["preheat"],
+                "ingredients":[]
+            }
+            self.steps=[new_step]+self.steps
         return True
 
     def new_ingredient_processor(self, soupy):

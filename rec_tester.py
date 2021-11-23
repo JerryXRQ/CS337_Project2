@@ -50,7 +50,9 @@ transforms = ["original.to_Vegetarian()",
               "original.indian()",
               "original.to_stir_fry()", 
               "original.to_deep_fry()", 
-              "original.original_cuisine()"
+              "original.original_cuisine()",
+              "original.to_bake()",
+              "original.to_steam()",
             ]
 
 for i in recipes:
