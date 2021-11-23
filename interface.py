@@ -60,6 +60,7 @@ def main():
             print("We do not understand this. Please try again.")
 
         elif action=="verbose":
+            original.print_title()
             original.print_ingredients()
             original.print_steps()
 

@@ -14,9 +14,13 @@ class recipe():
     primary_method = []
     secondary_method=[]
     steps=[]
+    title=""
 
 
     def print_ingredients(self):
+        print('\n')
+        print("List of Ingredients: ")
+        print('\n')
         for ele in self.ingredients.keys():
             print("Name: ", ele)
             print("Quantity: ", self.ingredients[ele]["quantity"])
@@ -30,6 +34,9 @@ class recipe():
 
 
     def print_steps(self):
+        print('\n')
+        print("List of Steps: ")
+        print('\n')
         counter=1
         for ele in self.steps:
             for e in ele.keys():
@@ -276,13 +283,19 @@ class recipe():
         return steps
 
     def process_methods_bs(self,res):
-        pm = defaultdict(int)
-        for ele in res:
-            s = self.process_methods_primary(ele.get_text())
-            for keys in s:
-                pm[keys] += s[keys]
-        self.primary_method = [k for k in pm.keys()]
-        self.primary_method.sort(key=lambda x: pm[x], reverse=True)
+        found=False
+        for me in data.Method_Primary:
+            if me in self.title:
+                self.primary_method.append(me)
+                found=True
+        if not found:
+            pm = defaultdict(int)
+            for ele in res:
+                s = self.process_methods_primary(ele.get_text())
+                for keys in s:
+                    pm[keys] += s[keys]
+            self.primary_method = [k for k in pm.keys()]
+            self.primary_method.sort(key=lambda x: pm[x], reverse=True)
         # Find Primary Method
 
         sm = defaultdict(int)
@@ -1812,6 +1825,7 @@ class recipe():
         self.primary_method = []
         self.secondary_method = []
         self.steps = []
+        self.title=""
         self.__init__(url)
 
 
@@ -1822,7 +1836,12 @@ class recipe():
         setattr(result, 'secondary_method', [copy.deepcopy(x) for x in self.secondary_method])
         setattr(result, 'steps', [copy.deepcopy(x) for x in self.steps])
         setattr(result, 'ingredients', copy.deepcopy(self.ingredients))
+        setattr(result, 'title', copy.deepcopy(self.title))
         return result
+
+    def print_title(self):
+        print('\n')
+        print("Recipe Name: ",self.title)
 
 
     def __init__(self,dish):
@@ -1830,7 +1849,12 @@ class recipe():
 
         bs=BeautifulSoup(html.content, features="html.parser")
         #print(bs)
-        
+        self.title=bs.find('title').string
+        self.title=self.title.replace(" | Allrecipes","")
+        self.title=self.title.strip()
+        self.title=self.title.lower()
+        print("\n")
+        print("Target Recipe: ",self.title)
         #new simplified ingredient parser
         self.ingredients = self.new_ingredient_processor(bs)
 

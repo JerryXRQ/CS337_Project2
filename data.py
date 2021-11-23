@@ -670,7 +670,9 @@ Method_Primary=set([
       "poach",
       "deep-fry",
       "shallow-fry",
-      "roast"
+      "roast",
+      "slow-cook",
+      "slow cook"
     ])
 Tools_to_Method={
       "air-fryer":"air-fry",
