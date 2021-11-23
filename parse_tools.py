@@ -1647,12 +1647,12 @@ class recipe():
             description = []
             additional = []
             for j in split_ing:
-                if j in data.prep:
-                    prep.append(j)
-                elif j in data.descriptors_non_nation:
-                    description.append(j)
-                elif j not in set(["to", "or", "taste", "and", "into", "for"]):
-                    new_ing.append(j)
+                if j.strip() in data.prep:
+                    prep.append(j.strip())
+                elif j.strip() in data.descriptors_non_nation:
+                    description.append(j.strip())
+                elif j.strip() not in set(["to", "or", "taste", "and", "into", "for"]):
+                    new_ing.append(j.strip())
 
             for k in range(len(new_ing)):
                 new_ing[k]=new_ing[k].strip()

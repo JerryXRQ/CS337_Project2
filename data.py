@@ -283,7 +283,10 @@ descriptors= {
             "slices",
             "hard",
             "extra-virgin",
-            "seedless"
+            "seedless",
+            "room",
+            "temperature",
+            "room-temperature"
       ]),
       "seafood": set([
             "cooked",
@@ -640,7 +643,10 @@ descriptors_non_nation=set([
             "very ripe",
             "flat-leaf"
             "skim",
-            "whole"
+            "whole",
+            "unpeeled",
+            "room",
+            "temperature"
 ])
       
 
