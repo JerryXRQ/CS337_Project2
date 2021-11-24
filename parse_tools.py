@@ -606,12 +606,15 @@ class recipe():
         replacement = []
         det=False
         present=defaultdict(list)
+        match={}
         for ele in self.ingredients.keys():
             if ele in data.Make_Healthy["ingredients"]:
                 replaced.append(ele)
                 replacement.append(data.Make_Healthy["ingredients"][ele])
                 present["Ingredient Change: "].append([replaced[-1],replacement[-1]])
                 det=True
+                for subw in ele.split():
+                    match[subw]=replacement[-1]
         for i in range(len(self.steps)):
             for app in self.steps[i]["methods"]:
                 if app in data.Make_Healthy["approach"]:
@@ -665,6 +668,9 @@ class recipe():
                 if ing in replaced:
                     new_lis_ing.append(replacement[replaced.index(ing)])
                     self.steps[i]["raw"]=self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
+                elif ing in match:
+                    new_lis_ing.append(match[ing])
+                    self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, match[ing])
                 else:
                     new_lis_ing.append(ing)
             self.steps[i]["ingredients"] = new_lis_ing
