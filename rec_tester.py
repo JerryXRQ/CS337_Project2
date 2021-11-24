@@ -53,6 +53,8 @@ transforms = ["original.to_Vegetarian()",
               "original.original_cuisine()",
               "original.to_bake()",
               "original.to_steam()",
+              "original.print_title()",
+              "original.print_methods()"
             ]
 
 for i in recipes:
