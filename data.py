@@ -647,7 +647,8 @@ descriptors_non_nation=set([
             "unpeeled",
             "room",
             "temperature",
-            "kosher"
+            "kosher",
+            "thick"
 ])
       
 
@@ -661,7 +662,6 @@ Method_Primary=set([
       "fry",
       "pressure cook",
       "grill",
-      "mix",
       "simmer",
       "blend",
       "sear",

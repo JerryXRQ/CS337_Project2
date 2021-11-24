@@ -538,7 +538,7 @@ class recipe():
         for ele in self.ingredients.keys():
             vege=False
             for words in ele.split():
-                if words in data.Vegetable:
+                if words in data.Vegetable and "oil" not in ele:
                     vege=True
                     break
             if vege:
@@ -1705,7 +1705,7 @@ class recipe():
                     prep.append(j.strip())
                 elif j.strip() in data.descriptors_non_nation:
                     description.append(j.strip())
-                elif j.strip() not in set(["to", "or", "taste", "and", "into", "for"]):
+                elif j.strip() not in set(["to", "or", "taste", "and", "into", "for", "as", "needed"]):
                     new_ing.append(j.strip())
 
             for k in range(len(new_ing)):
