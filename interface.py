@@ -39,6 +39,7 @@ def main():
     det=True
     while det:
         all_actions = ['verbose',"methods",'vegetarian', 'vegan', "weight", 'meat', "kosher", 'healthy', 'unhealthy', 'double', 'half', 'gluten', 'chinese',"mexican", "cajun", 'indian', 'french', 'lactose','stir-fry','deep-fry','region', 'undo','steam',"bake"]
+        print('\n')
         print("Available actions: ")
         print("Result Display: [verbose, methods, region]")
         print("Ingredients Requirements: [vegetarian, vegan, kosher, meat, gluten, lactose]")

@@ -359,6 +359,8 @@ class recipe():
             dic["unit"]=self.ingredients[replaced[ele]]["unit"]
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = []
+            dic['unit_type']=self.ingredients[replaced[ele]]['unit_type']
+
             for w in self.ingredients[replaced[ele]]["descriptions"]:
                 if w not in data.descriptors["meat"]:
                     dic["descriptions"].append(w)
@@ -464,6 +466,8 @@ class recipe():
             dic["unit"]=self.ingredients[replaced[ele]]["unit"]
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = []
+            dic['unit_type']=self.ingredients[replaced[ele]]['unit_type']
+
             #print(self.ingredients[replaced[ele]])
             for w in self.ingredients[replaced[ele]]["descriptions"]:
                 if w not in data.descriptors["meat"] and w not in data.descriptors["dairy"]:
@@ -557,6 +561,7 @@ class recipe():
             dic["unit"]=self.ingredients[replaced[ele]]["unit"]
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = []
+            dic['unit_type']=self.ingredients[replaced[ele]]['unit_type']
             for w in self.ingredients[replaced[ele]]["descriptions"]:
                 if w not in data.descriptors["veggie"]:
                     dic["descriptions"].append(w)
@@ -640,6 +645,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"]=self.ingredients[replaced[ele]]["unit_type"]
             if replacement[ele] in self.ingredients:
                 self.ingredients.pop(replaced[ele])
                 if self.ingredients[replacement[ele]]["unit"]==dic["unit"]:
@@ -668,7 +674,7 @@ class recipe():
                 if ing in replaced:
                     new_lis_ing.append(replacement[replaced.index(ing)])
                     self.steps[i]["raw"]=self.steps[i]["raw"].replace(ing, replacement[replaced.index(ing)])
-                elif ing in match:
+                elif ing in match and match[ing] not in self.steps[i]["raw"]:
                     new_lis_ing.append(match[ing])
                     self.steps[i]["raw"] = self.steps[i]["raw"].replace(ing, match[ing])
                 else:
@@ -731,6 +737,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             if replacement[ele] in self.ingredients:
                 self.ingredients.pop(replaced[ele])
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
@@ -881,6 +888,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             if replacement[ele] in self.ingredients:
                 self.ingredients.pop(replaced[ele])
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
@@ -945,6 +953,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             if replacement[ele] in self.ingredients:
                 self.ingredients.pop(replaced[ele])
                 if self.ingredients[replacement[ele]]["unit"] == dic["unit"]:
@@ -1016,6 +1025,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]] = dic
 
@@ -1086,6 +1096,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]] = dic
 
@@ -1156,6 +1167,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]] = dic
 
@@ -1226,6 +1238,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]] = dic
 
@@ -1295,6 +1308,7 @@ class recipe():
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = self.ingredients[replaced[ele]]["descriptions"]
             dic["additional"] = self.ingredients[replaced[ele]]["additional"]
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             self.ingredients.pop(replaced[ele])
             self.ingredients[replacement[ele]] = dic
 
@@ -1363,6 +1377,7 @@ class recipe():
             dic["unit"] = self.ingredients[replaced[ele]]["unit"]
             dic["prep"] = self.ingredients[replaced[ele]]["prep"]
             dic["descriptions"] = []
+            dic["unit_type"] = self.ingredients[replaced[ele]]["unit_type"]
             for w in self.ingredients[replaced[ele]]["descriptions"]:
                 if w not in data.descriptors["dairy"]:
                     dic["descriptions"].append(w)
@@ -1429,6 +1444,7 @@ class recipe():
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["Add before stir fry"]
+            dic['unit_type']="volumetric"
             self.ingredients["vegetable oil"]=dic
 
         for index in range(len(self.steps)):
@@ -1480,6 +1496,7 @@ class recipe():
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["Add before steam"]
+            dic["unit_type"]="N/A"
             self.ingredients["water"]=dic
         else:
             dic = {}
@@ -1489,6 +1506,7 @@ class recipe():
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["Add before steam"]
+            dic["unit_type"] = "N/A"
             self.ingredients["water for steaming"] = dic
 
 
@@ -1549,6 +1567,7 @@ class recipe():
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["Add before deep-fry"]
+            dic["unit_type"] = "N/A"
             self.ingredients["vegetable oil"]=dic
         else:
             dic = {}
@@ -1558,16 +1577,19 @@ class recipe():
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["Add before deep-fry"]
+            dic["unit_type"] = "N/A"
             self.ingredients["frying vegetable oil"] = dic
 
         if "flour" not in self.ingredients:
             dic = {}
             dic["name"] = "flour"
             dic["quantity"] = 1
-            dic["unit"] = "Based on the size of fryer"
+            dic["unit"] = "Based on the ingredients"
             dic["prep"] = []
             dic["descriptions"] = []
             dic["additional"] = ["cover ingredients"]
+            dic["unit_type"] = "N/A"
+
             self.ingredients["flour"]=dic
         else:
             self.ingredients["flour"]["quantity"]+=1.0
