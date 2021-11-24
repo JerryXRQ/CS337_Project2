@@ -648,7 +648,10 @@ descriptors_non_nation=set([
             "room",
             "temperature",
             "kosher",
-            "thick"
+            "thick",
+            "bulk",
+            "mild",
+            "uncooked"
 ])
       
 

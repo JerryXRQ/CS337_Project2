@@ -16,9 +16,9 @@ We have two health-related transformations: healthy and unhealthy. Both of them 
 
 For quantity change, we have implemented three options. The user can use the double instruction to double the recipe or use half to reduce it. We also try to adjust the cooking time accordingly. There is also a unit conversion option called weight. It will convert all units to grams.
 
-For style change, we implemented Chinese, Mexican, and Cajun styles. They will transform both ingredients and cooking approaches.
+For style change, we implemented Chinese, Mexican, Indian, French, and Cajun styles. They will transform both ingredients and cooking approaches.
 
-Additionally, the code can also change the primary cooking method to stir-fry, deep-fry, and steam. Additional ingredients and tools will be added if necessary.
+Additionally, the code can also change the primary cooking method to stir-fry, deep-fry, bake, and steam. Additional ingredients and tools will be added if necessary.
 
 We also added an undo function. It allows us to undo the previous transformation and restore the recipe. However, do note that if multiple transformations have been performed on the recipe, the only way to restore the original recipe is to enter the URL again.
 
@@ -50,7 +50,7 @@ Additional Tasks we Propose: 4 (weight conversion, kosher, undo, and tester)
 
 ### Jerry Xu:
 Designed the parsing framework.
-Added extra tasks Mexican transform, scaling, gluten-free, lactose-free, and all three cooking method change functions.
+Added extra tasks Mexican transform, scaling, gluten-free, lactose-free, and all four cooking method change functions.
 Wrote the README file.
 
 
